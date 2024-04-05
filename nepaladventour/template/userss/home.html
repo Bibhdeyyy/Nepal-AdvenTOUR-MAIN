@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepal AdvenTour| Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    {% include 'shared/navBar.html' %}
+</head>
+<body class="dark">
+    <section id="slider">
+        <div id="carouselExampleIndicators" class="carousel slide">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="{% static 'images/home/slider1.jpg' %}" class="d-block w-100" alt="...">
+                <div class="carousel-caption">
+                    <h5>Majestic Peaks Await</h5>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <img src="{% static 'images/home/slider2.jpg' %}" class="d-block w-100" alt="...">
+                <div class="carousel-caption">
+                    <h5>Himalayan Majesty Calls</h5>
+                </div>
+            </div>
+              <div class="carousel-item">
+                <img src="{% static 'images/home/slider3.jpg' %}" class="d-block w-100" alt="...">
+                <div class="carousel-caption">
+                    <h5>Annapurna's Graceful Slopes</h5>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+    </section>
+    <section id="welcome-content" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="py-2 text-center">Welcome to Nepal AdvenTour</h1>
+                </div>
+            </div>
+            <div class="row">
+                <input type="checkbox" id="Welcome-toggle" class="welcome-checkbox">
+                <label for="Welcome-toggle" class="welcome-checkbox"></label>
+                <div class="welcome-description mt-4">
+                    <p style="line-height: 1.5;">
+                        Nepal AdvenTour is your go-to platform for an unparalleled travel experience in the mesmerizing landscapes of Nepal. With a focus on personalized recommendations, our platform utilizes advanced machine learning to curate tailored suggestions for hotels and activities, ensuring that each traveler's unique preferences are met with precision.
+                    </p>
+                    <p style="line-height: 1.5;">
+                        Discover the beauty of Nepal through Nepal AdvenTour's intuitive interface, where user-centric design meets cutting-edge technology. From serene accommodations in the Himalayan foothills to vibrant cultural activities, our platform seamlessly combines user input, geographical insights, and evolving trends to provide a dynamic and ever-evolving travel guide.
+                    </p>
+                    <p style="line-height: 1.5;">
+                        Embark on a journey where every recommendation is a step closer to your dream adventure. Nepal AdvenTour goes beyond conventional travel planning, offering a personalized and evolving experience that adapts to your preferences, ensuring that your exploration of Nepal is not just a trip but a curated adventure tailored just for you.
+                        Nepal AdvenTour is more than just a travel companion; it's a digital passport to unlocking the treasures of Nepal. Dive into a world where authenticity meets innovation, and every recommendation is infused with local flavor and cultural richness. Our commitment extends beyond suggesting places to stay and activities to try; we aim to immerse you in the heartbeat of Nepal, connecting you with experiences that resonate with the soul of this vibrant nation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="destinations" class="pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="subtitle">
+                        Top Destination
+                    </span>
+                    <h2 class="py-2 mb-3" >Popular Destination</h2>
+                </div>
+                <div class="col-lg-3 mb-5">
+                    <div class="destination">
+                        <div class="destination-image">
+                            <img src="{% static 'images/home/nepal.jpg' %}" alt="">  
+                        </div>
+                        <div class="destination-info">
+                            <h3 class="mb-3">Kathmandu</h3>
+                            <p>9 Tour Packages</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-lg-3 mb-5">
+                    <div class="destination">
+                        <div class="destination-image">
+                            <img src="{% static 'images/home/bhutan.jpg' %}" alt="">  
+                        </div>
+                        <div class="destination-info">
+                            <h3 class="mb-3">Pokhara</h3>
+                            <p>4 Tour Packages</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-lg-3 mb-5">
+                    <div class="destination">
+                        <div class="destination-image">
+                            <img src="{% static 'images/home/tibet.jpg' %}" alt="">  
+                        </div>
+                        <div class="destination-info">
+                            <h3 class="mb-3">Chitwan</h3>
+                            <p>5 Tour Packages</p>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-lg-3 mb-5">
+                    <div class="destination">
+                        <div class="destination-image">
+                            <img src="{% static 'images/home/india.jpg' %}" alt="">  
+                        </div>
+                        <div class="destination-info">
+                            <h3 class="mb-3">Muktinath</h3>
+                            <p>6 Tour Packages</p>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="packages" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <span class="subtitle">
+                        Choose Your Place
+                </span>
+                <h2 class="mb-3">Featured Packages</h2>
+                </div>
+            </div>
+            <div class="swiper">
+                <div class="card-slider">
+                    <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="package card border-0 shadow">
+                            <div class="position-absolute top-0 left-0 ms-3 mt-3 z-1">
+                                <div class="label bg-success text-light">
+                                    Featured
+                                </div>
+                            </div>
+                            <div class="package-img overflow-hidden">
+                                <img src="{% static 'images/home/mardi.jpg' %}" class="img-fluid" alt = "">
+                            </div>
+                            <div class="card-header border-bottom-0 px-4 pt-4">
+                                <h6 class="package-title">Mardi Himal Trek</h6>
+                                <div class="card-subtitle">
+                                    <span class="duration">10 Days</span>
+                                    <span class="normal-seperate"></span>
+                                    <span>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-footer border-top-0 px-4 pt-0 pb-4">
+                                <h5 class="fs-5 m-0">
+                                    <span class="price">Rs 67,800</span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="package card border-0 shadow">
+                            <div class="package-img overflow-hidden">
+                                <img src="{% static 'images/home/ama-dablam.jpg' %}" class="img-fluid" alt = "">
+                            </div>
+                            <div class="card-header border-bottom-0 px-4 pt-4">
+                                <h6 class="package-title">Everest Base Camp Trek</h6>
+                                <div class="card-subtitle">
+                                    <span class="duration">16 Days</span>
+                                    <span class="normal-seperate"></span>
+                                    <span>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-footer border-top-0 px-4 pt-0 pb-4">
+                                <h5 class="fs-5 m-0">
+                                    <span class="price">Rs 1,67,800</span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="package card border-0 shadow">
+                            <div class="position-absolute top-0 left-0 ms-3 mt-3 z-1">
+                                <div class="label bg-success text-light">
+                                    Featured
+                                </div>
+                            </div>
+                            <div class="package-img overflow-hidden">
+                                <img src="{% static 'images/home/annapurna-base-camp.jpg' %}" class="img-fluid" alt = "">
+                            </div>
+                            <div class="card-header border-bottom-0 px-4 pt-4">
+                                <h6 class="package-title">Annapurna Base Camp Trek</h6>
+                                <div class="card-subtitle">
+                                    <span class="duration">14 Days</span>
+                                    <span class="normal-seperate"></span>
+                                    <span>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-footer border-top-0 px-4 pt-0 pb-4">
+                                <h5 class="fs-5 m-0">
+                                    <span class="price">Rs 1,47,800</span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="package card border-0 shadow">
+                            <div class="position-absolute top-0 left-0 ms-3 mt-3 z-1">
+                                <div class="label bg-success text-light">
+                                    Featured
+                                </div>
+                            </div>
+                            <div class="package-img overflow-hidden">
+                                <img src="{% static 'images/home/bhutan tour.jpg' %}" class="img-fluid" alt = "">
+                            </div>
+                            <div class="card-header border-bottom-0 px-4 pt-4">
+                                <h6 class="package-title">Bhutan Tour</h6>
+                                <div class="card-subtitle">
+                                    <span class="duration">6 Days</span>
+                                    <span class="normal-seperate"></span>
+                                    <span>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                        <i class="lni lni-star-fill checked"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-footer border-top-0 px-4 pt-0 pb-4">
+                                <h5 class="fs-5 m-0">
+                                    <span class="price">Rs 1,20,000</span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                
+                </div>
+            </div>
+            <div class="arrow my-2 justify-content-start">
+                <div class="prevArrowBtn">
+                    <i class="lni lni-chevron-left"></i>
+                </div>
+                <div class="nextArrowBtn">
+                    <i class="lni lni-chevron-right"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <section id="featured" class="py-5">
+            <div class="container py-5">
+                <div class="row d-flex align-items-center">
+                    <div class="col-md-5 col-12">
+                        <div class="mb-3">
+                            <img src="{% static 'images/home/everest-tour.jpg' %}" class="img-fluid w-100 rounded-1" alt="featured">
+                        </div>
+                    </div>
+                    <div class="col-md-5 offset-md-1 col-12">
+                        <span class="subtitle">
+                            Trip Of The Month
+                        </span>
+                        <h2 class="fw-bold fs-1 mt-3">
+                            Everest Base Camp Trek
+                        </h2>
+                        <p class="mb-3">
+                            Trek to Everest Base Camp, a legendary journey through Nepal's breathtaking Himalayan Peak.
+                        </p>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <span>
+                                    <i class="lni lni-checkmark"></i>
+                                </span>
+                                <span class="ms-1">Scenic Views of Majestic Everest Peaks</span>
+                            </li>
+                            <li class="mb-2">
+                                <span>
+                                    <i class="lni lni-checkmark"></i>
+                                </span>
+                                <span class="ms-1">Immerse in Rich Sherpa Culture</span>
+                            </li>
+                            <li class="mb-2">
+                                <span>
+                                    <i class="lni lni-checkmark"></i>
+                                </span>
+                                <span class="ms-1">Challenging Yet Rewarding Terrain Exploration</span>
+                            </li>
+                            <li class="mb-2">
+                                <span>
+                                    <i class="lni lni-checkmark"></i>
+                                </span>
+                                <span class="ms-1">Iconic Base Camp Arrival Achievement</span>
+                            </li>
+                            <li class="mb-2">
+                                <span>
+                                    <i class="lni lni-checkmark"></i>
+                                </span>
+                                <span class="ms-1">Memorable Himalayan Adventure Experience</span>
+                            </li>
+                        </ul>
+                        <a href="#" class="btn btn-outline-secondary border-0 w-100">Explore Package</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <section id="blog" class="pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <span class="subtitle">
+                        Travel Blog
+                    </span>
+                    <h2 class="mb-3">
+                        Travel Experience
+                    </h2>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card border-0">
+                        <div class="blog-img overflow-hidden">
+                            <img src="{% static 'images/home/nepal-tour.jpg' %}" class="img-fluid">
+                        </div>
+                        <div class="card-header border-bottom-0 ps-0">
+                            <h5 class="fw-bold mb-0">
+                                Trekking Tales : Exploring the Majestic Himalayas of Nepal
+                            </h5>
+                        </div>
+                        <div class="card-footer border-top-0 ps-0 py-0">
+                            <span>
+                                Jan 16, 2024
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card border-0">
+                        <div class="blog-img overflow-hidden">
+                            <img src="{% static 'images/home/travel.jpg' %}" class="img-fluid">
+                        </div>
+                        <div class="card-header border-bottom-0 ps-0">
+                            <h5 class="fw-bold mb-0">
+                                Himalayan Height: Embarking on Epic Adventures in Nepal's Peaks
+                            </h5>
+                        </div>
+                        <div class="card-footer border-top-0 ps-0 py-0">
+                            <span>
+                                Jan 16, 2024
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card border-0">
+                        <div class="blog-img overflow-hidden">
+                            <img src="{% static 'images/home/nepal-tour.jpg' %}" class="img-fluid">
+                        </div>
+                        <div class="card-header border-bottom-0 ps-0">
+                            <h5 class="fw-bold mb-0">
+                                Trekking Tales : Exploring the Majestic Himalayas of Nepal
+                            </h5>
+                        </div>
+                        <div class="card-footer border-top-0 ps-0 py-0">
+                            <span>
+                                Jan 16, 2024
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <button id="scroll-top-btn" type="button" onclick="scrollToTop()" class="visible">
+        <i class="lni lni-arrow-up"></i>
+    </button>
+    {% include 'shared/footer.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">
+    
+</head>
+<body>
+    <aside id="sidebar">
+        <div class="d-flex">
+            <button class="toggle-btn" type="button">
+                <i class="lni lni-grid-alt"></i>
+            </button>
+            <div class="sidebar-logo">
+                <a href="#">Nepal AdvenTour</a>
+            </div>
+        </div>
+        <ul class="sidebar-nav">
+            <li class="sidebar-item">
+                <a href="{% url 'admin_view' %}" class="sidebar-link">
+                    <i class="lni lni-protection"></i>
+                    <span>Admins</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'user_view' %}" class="sidebar-link">
+                    <i class="lni lni-users"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link">
+                    <i class="lni lni-apartment"></i>
+                    <span>Hotels</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link">
+                    <i class="lni lni-bi-cycle"></i>
+                    <span>Activities</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="#" class="sidebar-link">
+                    <i class="lni lni-clipboard"></i>
+                    <span>Reviews</span>
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/signout/" class="sidebar-link">
+                <i class="lni lni-exit"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/sidebar.js' %}"></script>
+</body>
+</html>

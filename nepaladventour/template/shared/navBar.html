@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="{% static 'css/navBar.css' %}" />
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <nav id="navbar">
+      <div class="navbar">
+        <i class="bx bx-menu"></i>
+        <div class="logo"><a href="{% url 'home' %}">Nepal AdvenTOUR</a></div>
+        <div class="nav-links">
+          <div class="sidebar-logo">
+            <span class="logo-name">Nepal AdvenTOUR</span>
+            <i class="bx bx-x"></i>
+          </div>
+          <ul class="links">
+            <li><a href="{% url 'home' %}" >HOME</a></li>
+            <li>
+              <a href="#">Activities</a>
+              <i class="bx bxs-chevron-down htmlcss-arrow arrow"></i>
+              <ul class="htmlCss-sub-menu sub-menu">
+                <li><a href="#">Explore Activities</a></li>
+                <li><a href="#">Search Activities</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="{% url 'hotels' %}">Hotels</a>
+              <i class="bx bxs-chevron-down js-arrow arrow"></i>
+              <ul class="js-sub-menu sub-menu">
+                <li><a href="#">Explore Hotels</a></li>
+                <li><a href="#">Search Hotels</a></li>
+              </ul>
+            </li>
+            <li><a href="#">ABOUT US</a></li>
+          </ul>
+        </div>
+        <div class="navbuttons">
+          <div class="search-box">
+            <i class="bx bx-search"></i>
+            <div class="input-box">
+              <input type="text" placeholder="Search..." />
+            </div>
+          </div>
+          <div class="search-box">
+            <i class="bx bx-user">
+                <ul class="js-sub-menu sub-menu">
+                    <li><a href="{% url 'user_profile' %}">Profile</a></li>
+                    <li><form action="/signout/" method="post">
+                        {% csrf_token %}
+                        <div>
+                        <button type="submit">Logout</button>
+                        </div>
+                    </form>
+                </li>
+                </ul>
+            </i>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </head>
+  <body>
+    <script type="text/javascript" src="{% static 'js/navBar.js' %}"></script>
+    <script>
+      const nav = document.querySelector(".navbar");
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 56) {
+          nav.classList.add("navbar-scrolled");
+        } else if (window.scrollY < 56) {
+          nav.classList.remove("navbar-scrolled");
+        }
+      });
+    </script>
+  </body>
+</html>

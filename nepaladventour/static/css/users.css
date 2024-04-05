@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+  .table{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 15px;
+    min-width: 100%;
+    overflow: hidden;
+    border-radius: 5px 5px 0 0;
+  }
+  table thead tr{
+    color: #fff; /* Keeps text color white for contrast */
+    background: #354351; /* Updated to match the sidebar's background color */
+    text-align: left;
+    font-weight: bold;
+  }
+  .table th,
+  .table td{
+    padding: 12px 15px;
+  }
+  .table tbody tr{
+    border-bottom: 1px solid #ddd;
+  }
+  .table tbody tr:nth-of-type(odd){
+    background: #f3f3f3;
+  }
+  .table tbody tr.active{
+    font-weight: bold;
+    color: #4AD489;
+  }
+  .table tbody tr:last-of-type{
+    border-bottom: 2px solid #233240;
+  }
+  .table button{
+    padding: 6px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid ##1a2c3e;
+  }
+  .table button:hover{
+    background:#233240;
+    color: #fff;
+    transition: 0.5rem;
+  }

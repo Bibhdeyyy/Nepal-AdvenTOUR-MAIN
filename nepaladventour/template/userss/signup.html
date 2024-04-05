@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+    <script src="https://kit.fontawesome.com/c697a669aa.js" crossorigin="anonymous"></script>
+    <title>Sign up</title>
+</head>
+<body>
+
+<div class="container">
+  <div class="title">Sign up</div>
+  <div class="content">
+    <form class="registration-form" action="{% url 'signup' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="user-details">
+
+        <div class="input-box">
+          <span class="details">Full Name</span>
+          <input type="text" name="fullname" placeholder="enter your fullname" required><br>
+        </div>
+
+        <div class="input-box">
+          <span class="details">Email</span>
+          <input type="email" name="email" placeholder="enter your email" required><br>  
+        </div>    
+        
+        <div class="input-box">
+          <span class="details">Username</span>
+          <input type="text" name="username" placeholder="enter your username" required><br>
+        </div>
+
+        <div class="input-box file">
+            <span class="details">Profile Picture</span>
+            <label class="fake-file-input">
+                <input type="file" name="profile_picture" accept="image/*" required onchange="updateFileName(this)" required>
+                <h5 style="font-weight: 500;">Upload File</h5>
+            </label> 
+            <div class="file-name" id="file-name"></div>
+        </div>
+        
+
+        <div class="input-box">
+            <span class="details">Password</span>
+            <input type="password" name="password" id="password" placeholder="enter your password" required oninput="checkPasswords();">
+            <i class="fa fa-eye-slash" aria-hidden="true" onclick="togglePasswordVisibility('password')"></i>
+        </div>
+        
+
+        <div class="input-box">
+            <span class="details">Confirm Password</span>
+            <input type="password" name="confirmpassword" id="confirmpassword" placeholder="Re-enter your password" required oninput="checkPasswords();">
+            <i class="fa fa-eye-slash" aria-hidden="true" onclick="togglePasswordVisibility('confirmpassword')"></i>
+        </div>
+        
+
+        <p id="password-error" style="color: red; display: none;">Passwords do not match</p>
+      </div>      
+      
+      <div class="input-box">
+        <span class="details">Open to Connect with Travellers:</span>
+        <select name="connect" id="connect" onchange="toggleSocialMediaInput()" required>
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+      </select><br>
+      </div><br>
+
+      <div id="social-media-input" style="display: None;" class="input-box">
+        <span class="details">Social Media Username</span>
+        <input style="height: 45px; width: calc(100% / 2 - 20px); outline: none; padding-left: 15px; border: 1px solid #ccc;" type="text" name="social_media" placeholder="enter your social media username"><br>
+      </div>
+      <div class="button">
+        <input type="submit" value="Signup" onsubmit="return validatePasswords();">
+        <p style="margin-left:170px;padding: 5px; font-family: 'Poppins', sans-serif;">Already have an account?<a href="{% url 'signin' %}">sign in</a></p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/signup.js' %}"></script>
+</body>
+</html>
