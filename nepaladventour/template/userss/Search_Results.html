@@ -1,0 +1,45 @@
+<h2>Search Results for "{{ query }}"</h2>
+
+{% if address_hotels %}
+<h3>Hotel with Name "{{ query }}"</h3>
+<ul>
+    {% for hotel in address_hotels %}
+    <li>{{ hotel.name }} - {{ hotel.address_name }}, {{ hotel.city }}, {{ hotel.state }}, {{ hotel.zip_code }}</li>
+    {% empty %}
+    <li>No hotels found with this name.</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if hotels %}
+<h3>Other Hotels in the Same City</h3>
+<ul>
+    {% for hotel in hotels %}
+    <li>{{ hotel.name }} - {{ hotel.address_name }}, {{ hotel.city }}, {{ hotel.state }}, {{ hotel.zip_code }}</li>
+    {% empty %}
+    <li>No other hotels found in this city.</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if address_activities %}
+<h3>Activity with Name "{{ query }}"</h3>
+<ul>
+    {% for activity in address_activities %}
+    <li>{{ activity.name }} - {{ activity.address_name }}, {{ activity.city }}, {{ activity.state }}, {{ activity.zip_code }}</li>
+    {% empty %}
+    <li>No activities found with this name.</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if activities %}
+<h3>Other Activities in the Same City</h3>
+<ul>
+    {% for activity in activities %}
+    <li>{{ activity.name }} - {{ activity.address_name }}, {{ activity.city }}, {{ activity.state }}, {{ activity.zip_code }}</li>
+    {% empty %}
+    <li>No other activities found in this city.</li>
+    {% endfor %}
+</ul>
+{% endif %}

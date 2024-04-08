@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.hashers import make_password
-from login.models import profile  
+from login.models import *  
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 from django.urls import reverse
@@ -212,6 +212,23 @@ def delete_admin(request, id):
     
     return redirect('admin_view')
 
+#Admin Hotels
+def hotel_view(request):
+    hotels = Hotel.objects.filter()
+    paginator = Paginator(hotels, 5)  # Show 5 profiles per page
+
+    page = request.GET.get('page')
+    hotels = paginator.get_page(page)
+    return render(request, "admin/hotels/hotel_view.html",{'hotels': hotels})
+
+#Admin Activities
+def activity_view(request):
+    activities = Activity.objects.filter()
+    paginator = Paginator(activities, 5)  # Show 5 profiles per page
+
+    page = request.GET.get('page')
+    activities = paginator.get_page(page)
+    return render(request, "admin/activities/activity_view.html",{'activities':activities})
 
 # Navbar
 def navBar(request):
@@ -223,8 +240,9 @@ def footer(request):
 
 def hotels(request):
     return render(request, "userss/Hotels.html")
-#Displaying user data from the database
-
+#Search Results
+def search_results(request):
+    return render(request, "userss/Search_Results.html")
 
 #users
 def user_view(request):
@@ -277,3 +295,28 @@ def delete_user(request, id):
     profiles.delete()
     messages.info(request, "User Deleted Successfully")
     return redirect('user_view')
+
+from django.shortcuts import render
+from .models import Hotel, Activity
+
+def search_results(request):
+    query = request.GET.get('query', '')
+    hotels = Hotel.objects.filter(city__icontains=query)
+    activities = Activity.objects.filter(city__icontains=query)
+    address_hotels = Hotel.objects.filter(name__icontains=query, city__icontains=query)
+    address_activities = Activity.objects.filter(name__icontains=query, city__icontains=query)
+
+    context = {
+        'query': query,
+        'hotels': hotels,
+        'activities': activities,
+        'address_hotels': address_hotels,
+        'address_activities': address_activities
+    }
+
+    if query:
+        template_name = 'search_results.html'
+    else:
+        template_name = 'search_results_empty.html'
+
+    return render(request, template_name, context)

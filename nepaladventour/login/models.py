@@ -13,11 +13,15 @@ class profile(AbstractUser):
 
 class Hotel(models.Model):
     name = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
-    contact = models.CharField(max_length=255)
+    type_of_hotel= models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     budget = models.DecimalField(max_digits=10, decimal_places=2)
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=255, default='Default City')
+    contact = models.CharField(max_length=255)
     description = models.TextField()
     picture = models.ImageField(upload_to='hotel_pics/')
+    
 
     def __str__(self):
         return self.name
@@ -25,7 +29,7 @@ class Hotel(models.Model):
 class HotelReview(models.Model):
     description = models.TextField()
     rating = models.PositiveIntegerField()
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey('login.profile', on_delete=models.CASCADE)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -34,11 +38,12 @@ class HotelReview(models.Model):
 class Activity(models.Model):
     name = models.CharField(max_length=255)
     age_required = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    address = models.CharField(max_length=255, default='Default City')
+    city = models.CharField(max_length=255)
     contact = models.CharField(max_length=255)
     status = models.CharField(max_length=100)
     picture = models.ImageField(upload_to='activity_pics/')
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    place = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
@@ -46,14 +51,14 @@ class Activity(models.Model):
 class ActivityReview(models.Model):
     description = models.TextField()
     rating = models.PositiveIntegerField()
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey('login.profile', on_delete=models.CASCADE)
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'Review by {self.user.username} for {self.activity.name}'
 
 class Recommendation(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey('login.profile', on_delete=models.CASCADE)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, null=True, blank=True)
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE, null=True, blank=True)
 
