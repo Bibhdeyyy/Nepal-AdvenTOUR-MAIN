@@ -221,6 +221,46 @@ def hotel_view(request):
     hotels = paginator.get_page(page)
     return render(request, "admin/hotels/hotel_view.html",{'hotels': hotels})
 
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from .models import Hotel
+from django.core.files.storage import FileSystemStorage
+
+def add_hotel(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        type_of_hotel = request.POST.get('type_of_hotel')
+        price = request.POST.get('price')
+        budget = request.POST.get('budget')
+        address = request.POST.get('address')
+        city = request.POST.get('city', 'Default City')  # Using 'Default City' if city is not provided
+        contact = request.POST.get('contact')
+        description = request.POST.get('description')
+        picture = request.FILES.get('picture')
+
+        # Optional: Add more validations as needed, for example, checking for duplicate hotel names.
+
+        # Create and save the new hotel instance
+        new_hotel = Hotel(
+            name=name,
+            type_of_hotel=type_of_hotel,
+            price=price,
+            budget=budget,
+            address=address,
+            city=city,
+            contact=contact,
+            description=description,
+            picture=picture  # Directly assign the uploaded file to the ImageField
+        )
+        new_hotel.save()
+
+        # Redirect to a success page or the hotel list page
+        return redirect('hotel_view')  # Ensure you have defined this URL name in your urls.py
+    else:
+        # If not a POST request, just render the hotel registration form page
+        return render(request, "admin/hotels/add_hotel.html")  # Update the path to your hotel registration form template
+
+
 #Admin Activities
 def activity_view(request):
     activities = Activity.objects.filter()
