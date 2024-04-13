@@ -20,16 +20,24 @@ class Hotel(models.Model):
     city = models.CharField(max_length=255, default='Default City')
     contact = models.CharField(max_length=255)
     description = models.TextField()
+    #Main Picture of the Hotel
     picture = models.ImageField(upload_to='hotel_pics/')
     
 
     def __str__(self):
         return self.name
+    
+class HotelImage(models.Model):
+    hotel = models.ForeignKey(Hotel, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='hotel_images/')
+
+    def __str__(self):
+        return f"Image for {self.hotel.name}"
 
 class HotelReview(models.Model):
     description = models.TextField()
     rating = models.PositiveIntegerField()
-    user = models.ForeignKey('login.profile', on_delete=models.CASCADE)
+    user = models.ForeignKey(profile, on_delete=models.CASCADE)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -48,11 +56,16 @@ class Activity(models.Model):
     def __str__(self):
         return self.name
 
+class ActivityImage(models.Model):
+    activity = models.ForeignKey(Activity, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='activity_images/')
+
+
 class ActivityReview(models.Model):
     description = models.TextField()
     rating = models.PositiveIntegerField()
     user = models.ForeignKey('login.profile', on_delete=models.CASCADE)
-    activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE, related_name='activityreview')
 
     def __str__(self):
         return f'Review by {self.user.username} for {self.activity.name}'

@@ -27,10 +27,10 @@
         {% include 'shared/sidebar.html' %}  
         </div>
         <div class="container mt-4">            
-          <h2>Acitivities</h2>
+          <h2 style="margin-left: 550px;">Acitivities</h2>
           
           <div class="d-flex justify-content-end">
-          <a href="{% url 'add_admin' %}" class="btn btn-success custom-light-green">
+          <a href="{% url 'add_activity' %}" class="btn btn-success custom-light-green">
             <i class="fas fa-plus"></i> Add New Activity
           </a>
         </div>
@@ -46,6 +46,7 @@
                       <th>City</th>
                       <th>Contact</th>
                       <th>Status</th>
+                      <th>Picture</th>
                       <th>Action</th>
                   </tr>
               </thead>
@@ -59,13 +60,18 @@
                       <td>{{ activity.address }}</td>
                       <td>{{ activity.city }}</td>
                       <td>{{ activity.contact }}</td>
-                      <td>{{ activity.status }}</td>                     
+                      <td>{{ activity.status }}</td>
+                      <td>
+                        {% if activity.picture %}
+                        <img src="{{ activity.picture.url }}" alt="Activity Image" style="width: 100px; height: auto;">
+                        {% endif %}
+                    </td>                     
                       <td>
                         <div class="action-buttons">
-                            <a href="{% url 'edit_admin' user.id %}" class="btn btn-warning btn-sm edit-btn">
+                            <a href="{% url 'edit_activity' activity.id %}" class="btn btn-warning btn-sm edit-btn">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
-                            <a href="{% url 'delete_admin' user.id %}" class="btn btn-danger btn-sm">
+                            <a href="{% url 'delete_activity' activity.id %}" class="btn btn-danger btn-sm">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </div>
@@ -76,16 +82,16 @@
           </table>
           <div class="pagination">
             <span class="step-links">
-                {% if profiles.has_previous %}
-                    <a href="?page={{ profiles.previous_page_number }}" class="btn btn-primary btn-sm">Previous</a>
+                {% if activities.has_previous %}
+                    <a href="?page={{ activities.previous_page_number }}" class="btn btn-primary btn-sm">Previous</a>
                 {% endif %}
                 
                 <span class="current">
-                    Page {{ profiles.number }} of {{ profiles.paginator.num_pages }}.
+                    Page {{ activities.number }} of {{ activities.paginator.num_pages }}.
                 </span>
 
-                {% if profiles.has_next %}
-                    <a href="?page={{ profiles.next_page_number }}" class="btn btn-primary btn-sm">Next</a>
+                {% if activities.has_next %}
+                    <a href="?page={{ activities.next_page_number }}" class="btn btn-primary btn-sm">Next</a>
                 {% endif %}
             </span>
         </div>

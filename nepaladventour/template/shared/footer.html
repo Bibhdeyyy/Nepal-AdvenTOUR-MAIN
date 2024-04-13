@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{%load static%}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -28,6 +29,7 @@ footer{
     margin-top: auto;
     background-color:  #161618;
     padding: 60px 10%;
+    width:100%;
 }
 
 ul{
@@ -114,21 +116,36 @@ ul li a:hover{
         width: 100%;
     }
 }
+
+.footer-logo {
+    height: 120px;
+    width: 200px;
+    margin: 0 auto; /* Centers the logo if the footer has a flex or block display */
+    display: block; /* Ensures that the image is a block-level element to accept margin auto */
+    padding: 10px; /* Gives some space around the logo */
+    transition: transform 0.3s ease; /* For a smooth hover effect */
+}
+
+.footer-logo:hover {
+    transform: scale(1.05); /* Slightly enlarges the logo on hover */
+}
 </style>
   </head>
 <body>
 
   <footer>
     <div style="font-size: 32px; color: #fff;">
-        <h4>Nepal Adventour</h4> <br><br>
+        <a href="{% url 'home' %}">
+        <img src="{% static 'images/home/logo.png' %}" class="footer-logo"></br><br>
+        </a>
             <p style="font-size: 16px;">Copyright 2024 Nepal AdvenTour</p>
     </div> 
     <div class="footer-col" style="margin-left: 300px;">
         <h4>Quick Links</h4>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Activities</a></li>
-            <li><a href="#">Hotels</a></li>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'activities' %}">Activities</a></li>
+            <li><a href="{% url 'hotels' %}">Hotels</a></li>
             <li><a href="#">About Us</a></li>
         </ul>
     </div>

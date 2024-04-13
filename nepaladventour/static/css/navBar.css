@@ -16,7 +16,7 @@ nav {
   height: 100%;
   height: 70px;
   background: black;
-  z-index: 99;
+  z-index: 99;  
 }
 nav .navbar {
   height: 100%;
@@ -294,4 +294,10 @@ nav .navbar .links li:hover .js-sub-menu {
 .navbar-scrolled {
   background-color: black;
   color: #fff;
+}
+.navbar {
+  height: 70px;
+  background: black; /* was repeated, ensure it's necessary */
+  padding: 0 50px; /* Check if this padding doesn't conflict with footer */
+  transition: all 0.5s; /* This should not affect the footer */
 }

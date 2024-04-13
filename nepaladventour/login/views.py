@@ -13,7 +13,8 @@ from django.core.paginator import Paginator
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-
+from django.http import HttpResponseNotAllowed
+from django.db.models import Avg
 # Home Page
 def home(request):
     if request.user.is_authenticated:
@@ -221,26 +222,21 @@ def hotel_view(request):
     hotels = paginator.get_page(page)
     return render(request, "admin/hotels/hotel_view.html",{'hotels': hotels})
 
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from .models import Hotel
-from django.core.files.storage import FileSystemStorage
 
 def add_hotel(request):
     if request.method == "POST":
+        # Collecting data from the form
         name = request.POST.get('name')
         type_of_hotel = request.POST.get('type_of_hotel')
         price = request.POST.get('price')
         budget = request.POST.get('budget')
         address = request.POST.get('address')
-        city = request.POST.get('city', 'Default City')  # Using 'Default City' if city is not provided
+        city = request.POST.get('city')
         contact = request.POST.get('contact')
         description = request.POST.get('description')
-        picture = request.FILES.get('picture')
+        main_picture = request.FILES.get('picture')  # This fetches the main hotel picture
 
-        # Optional: Add more validations as needed, for example, checking for duplicate hotel names.
-
-        # Create and save the new hotel instance
+        # Creating and saving the new Hotel instance with the main picture
         new_hotel = Hotel(
             name=name,
             type_of_hotel=type_of_hotel,
@@ -250,16 +246,72 @@ def add_hotel(request):
             city=city,
             contact=contact,
             description=description,
-            picture=picture  # Directly assign the uploaded file to the ImageField
+            picture=main_picture  # Assign the main picture here
         )
         new_hotel.save()
-
-        # Redirect to a success page or the hotel list page
-        return redirect('hotel_view')  # Ensure you have defined this URL name in your urls.py
+        
+        # Handling the upload of additional images
+        additional_images = request.FILES.getlist('images')  # Fetches all files selected for the 'images' input
+        for image in additional_images:
+            # For each image, create a new HotelImage instance linked to the newly created Hotel
+            HotelImage.objects.create(hotel=new_hotel, image=image)
+        
+        # Redirect to a success or detail view of the hotel after the hotel and its images have been saved
+        return redirect('hotel_view')  # Make sure 'hotel_view' is the correct URL name for your success or detail view
     else:
-        # If not a POST request, just render the hotel registration form page
-        return render(request, "admin/hotels/add_hotel.html")  # Update the path to your hotel registration form template
+        # Render the hotel registration form for GET requests
+        return render(request, "admin/hotels/add_hotel.html")
 
+#Hotel Edit
+def edit_hotel(request, id):
+    hotel = get_object_or_404(Hotel, id=id)
+    
+    if request.method == "POST":
+        # Update hotel fields with form data
+        hotel.name = request.POST.get('name', hotel.name)
+        hotel.type_of_hotel = request.POST.get('type_of_hotel', hotel.type_of_hotel)
+        hotel.price = request.POST.get('price', hotel.price)
+        hotel.budget = request.POST.get('budget', hotel.budget)
+        hotel.address = request.POST.get('address', hotel.address)
+        hotel.city = request.POST.get('city', hotel.city)
+        hotel.contact = request.POST.get('contact', hotel.contact)
+        hotel.description = request.POST.get('description', hotel.description)
+        
+        # Handling the main picture change (if a new picture is uploaded)
+        new_main_picture = request.FILES.get('picture')
+        if new_main_picture:
+            hotel.picture = new_main_picture
+        
+        hotel.save()
+        
+        # Handling new additional images upload
+        new_images = request.FILES.getlist('new_images')
+        for image in new_images:
+            HotelImage.objects.create(hotel=hotel, image=image)
+        
+        messages.success(request, "Hotel updated successfully.") 
+        # Redirect to the hotel's detail view after saving changes
+        return redirect('hotel_view')
+    else:
+        # If the request is not POST, display the form with hotel info
+        return render(request, "admin/hotels/edit_hotel.html", {'hotel': hotel})
+
+#delete Hotel
+def delete_hotel(request, id):
+    hotels= Hotel.objects.get(id=id)
+    hotels.delete()
+    messages.info(request, "Hotel Removed Successfully")
+    return redirect('hotel_view')
+
+
+#Delete hotel image
+@require_POST
+def delete_hotel_image(request, id):
+    image = get_object_or_404(HotelImage, id=id)
+    hotel_id = image.hotel.id
+    image.delete()
+    messages.success(request, "Image deleted successfully.")
+    return redirect('edit_hotel', id=hotel_id)
 
 #Admin Activities
 def activity_view(request):
@@ -269,6 +321,118 @@ def activity_view(request):
     page = request.GET.get('page')
     activities = paginator.get_page(page)
     return render(request, "admin/activities/activity_view.html",{'activities':activities})
+
+def add_activity(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        age_required = request.POST.get('age_required')
+        price = request.POST.get('price')
+        address = request.POST.get('address')
+        city = request.POST.get('city')
+        contact = request.POST.get('contact')
+        status = request.POST.get('status')
+        main_picture = request.FILES.get('picture')
+        
+        activity = Activity(
+            name=name,
+            age_required=age_required,
+            price=price,
+            address=address,
+            city=city,
+            contact=contact,
+            status=status,
+            picture=main_picture
+        )
+        activity.save()
+        
+        images = request.FILES.getlist('images')
+        for image in images:
+            ActivityImage.objects.create(activity=activity, image=image)
+            
+        messages.success(request, 'New activity added successfully!')
+        return redirect('activity_view')  # Assuming you have a URL pattern named 'activity_view'
+    else:
+        return render(request, 'admin/activities/add_activity.html')
+
+def edit_activity(request, id):
+    activity = get_object_or_404(Activity, id=id)
+    
+    if request.method == "POST":
+        # Update activity fields with form data
+        activity.name = request.POST.get('name', activity.name)
+        activity.age_required = request.POST.get('age_required', activity.age_required)
+        activity.price = request.POST.get('price', activity.price)
+        activity.address = request.POST.get('address', activity.address)
+        activity.city = request.POST.get('city', activity.city)
+        activity.contact = request.POST.get('contact', activity.contact)
+        activity.status = request.POST.get('status', activity.status)
+        
+        # Handling the main picture change (if a new picture is uploaded)
+        new_main_picture = request.FILES.get('picture')
+        if new_main_picture:
+            activity.picture = new_main_picture
+        
+        activity.save()
+        
+        # Handling new additional images upload
+        new_images = request.FILES.getlist('new_images')
+        for image in new_images:
+            ActivityImage.objects.create(activity=activity, image=image)
+        
+        messages.success(request, 'Activity updated successfully.')
+        return redirect('activity_view')
+    else:
+        # If the request is not POST, display the form with activity info
+        return render(request, "admin/activities/edit_activity.html", {'activity': activity})
+
+def delete_activity(request, id):
+    activity = Activity.objects.get(id=id)
+    activity.delete()
+    messages.success(request, "Activity deleted successfully.")
+    return redirect('activity_view')
+
+@require_POST
+def delete_activity_image(request, id):
+    image = get_object_or_404(ActivityImage, id=id)
+    activity_id = image.activity.id
+    image.delete()
+    messages.success(request, "Image deleted successfully.")
+    return redirect('edit_activity', id=activity_id)
+
+#Admin view Hotel Review
+def hotel_review(request):
+    hotel_reviews = HotelReview.objects.all()  # Retrieve all hotel reviews
+    
+    paginator = Paginator(hotel_reviews, 5)  # Show 5 hotel reviews per page
+
+    page_number = request.GET.get('page')
+    hotel_reviews = paginator.get_page(page_number)
+
+    return render(request, "admin/hotel_reviews/hotel_review.html", {'hotel_reviews': hotel_reviews})
+
+#Admin Delet Review
+def delete_hotel_review(request, id):
+    hotel_reviews = HotelReview.objects.get(id=id)
+    hotel_reviews.delete()
+    messages.success(request, "Hotel Reviews deleted successfully.")
+    return redirect('hotel_review')
+
+def activity_review(request):
+    activity_reviews = ActivityReview.objects.all()  # Retrieve all hotel reviews
+    
+    paginator = Paginator(activity_reviews, 5)  # Show 5 hotel reviews per page
+
+    page_number = request.GET.get('page')
+    activity_reviews = paginator.get_page(page_number)
+
+    return render(request, "admin/activity_reviews/activity_review.html", {'activity_reviews':activity_reviews})
+
+def delete_activity_review(request, id):
+    activity_reviews = ActivityReview.objects.get(id=id)
+    activity_reviews.delete()
+    messages.success(request, "Activity Reviews deleted successfully.")
+    return redirect('activity_review')
+
 
 # Navbar
 def navBar(request):
@@ -336,9 +500,6 @@ def delete_user(request, id):
     messages.info(request, "User Deleted Successfully")
     return redirect('user_view')
 
-from django.shortcuts import render
-from .models import Hotel, Activity
-
 def search_results(request):
     query = request.GET.get('query', '')
     hotels = Hotel.objects.filter(city__icontains=query)
@@ -360,3 +521,13 @@ def search_results(request):
         template_name = 'search_results_empty.html'
 
     return render(request, template_name, context)
+
+
+
+def activities(request):
+    # Annotate each activity with its average rating
+    activities = Activity.objects.annotate(
+        average_rating=Avg('activityreview__rating')  # Assuming 'activityreview' is the related_name
+    )
+    
+    return render(request, 'userss/activities.html', {'activities': activities})
