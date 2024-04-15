@@ -444,9 +444,82 @@ def footer(request):
 
 def hotels(request):
     return render(request, "userss/Hotels.html")
-#Search Results
-def search_results(request):
-    return render(request, "userss/Search_Results.html")
+
+
+
+
+def search_hotels(request):
+    # Get distinct city values
+    cities = Hotel.objects.order_by('city').values_list('city', flat=True).distinct()
+    
+    # Get distinct types of hotels
+    types_of_hotels = Hotel.objects.order_by('type_of_hotel').values_list('type_of_hotel', flat=True).distinct()
+    
+    # Get distinct budgets
+    budgets = Hotel.objects.order_by('budget').values_list('budget', flat=True).distinct()
+
+    return render(request, 'userss/search_hotels.html', {
+        'cities': cities,
+        'types_of_hotels': types_of_hotels,
+        'budgets': budgets
+    })
+
+def filter_hotels(request):
+    # Fetch parameters from GET request
+    city = request.GET.get('city', '')
+    type_of_hotel = request.GET.get('type_of_hotel', '')
+    budget = request.GET.get('budget', '')
+
+    # Initialize empty lists to store results for each category
+    hotels_by_city = []
+    hotels_by_type = []
+    hotels_by_budget = []
+    all_criteria = []
+
+    # Base query to modify based on inputs
+    base_query = Hotel.objects.all()
+
+    # Conditional application of filters
+    if city or type_of_hotel or budget:
+        if city:
+            hotels_by_city = base_query.filter(city__iexact=city)
+        if type_of_hotel:
+            hotels_by_type = base_query.filter(type_of_hotel__iexact=type_of_hotel)
+        if budget and budget.isdigit():
+            hotels_by_budget = base_query.filter(budget__lte=budget)
+
+        # Query for all criteria
+        if city and type_of_hotel and budget:
+            all_criteria = base_query.filter(city__iexact=city, type_of_hotel__iexact=type_of_hotel, budget__lte=budget)
+            # Remove these hotels from individual lists
+            hotels_by_city = [hotel for hotel in hotels_by_city if hotel not in all_criteria]
+            hotels_by_type = [hotel for hotel in hotels_by_type if hotel not in all_criteria]
+            hotels_by_budget = [hotel for hotel in hotels_by_budget if hotel not in all_criteria]
+
+    # Render results to a new template
+    return render(request, 'userss/hotel_search_results.html', {
+        'all_criteria': all_criteria,
+        'hotels_by_city': hotels_by_city,
+        'hotels_by_type': hotels_by_type,
+        'hotels_by_budget': hotels_by_budget,
+    })
+
+def search_activity(request):
+    # This will fetch distinct activity names ordered by name
+    activities = Activity.objects.order_by('name').values_list('name', flat=True).distinct()
+    return render(request, 'userss/search_activity.html', {
+        'activities': activities
+    })
+
+def activity_search_results(request):
+    # Get the activity name from the GET request
+    activity_name = request.GET.get('activity_name', '')
+
+    # Filter activities based on the selected name
+    activities = Activity.objects.filter(name=activity_name) if activity_name else Activity.objects.none()
+
+    # Render a template with the filtered activities
+    return render(request, 'userss/activity_search_results.html', {'activities': activities})
 
 #users
 def user_view(request):

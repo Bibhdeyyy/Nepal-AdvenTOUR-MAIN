@@ -10,11 +10,12 @@
 	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/activities.css' %}">
 	{%include 'shared/navBar.html'%}
 </head>
 <body>
-    <div style="padding-bottom: 80px;"></div>
-    <h1 style="padding-top: 30px;padding-left: 70px;">Explore Activities</h1>
+    <div style="padding-bottom: 40px"></div>
+    <h1 style="padding-left: 70px;">Explore Activities</h1>
     <div id="card-area">
         <div class="wrapper">
             <div class="container">
@@ -35,130 +36,6 @@
         </div>
     </div>
 
-    
-           
-<style>
-    *{
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif; 
-    box-sizing: border-box;
-}
-body{
-	background: #1e1f21;
-    color: #fff;
-}
-.wrapper{
-    overflow: hidden;
-    position: relative;
-}
-#card-area{
-    padding: 50px 0;
-}
-        .container {
-        overflow-x: auto;
-        padding: 0 20px; /* Add padding to both left and right sides of the container */
-        box-sizing: border-box; /* Include padding in the container's width */
-        display: flex; /* Use flexbox for the container */
-        gap: 20px; /* Set the gap between cards */
-        width: calc(950px * 4 + 1000px);
-        margin: auto;
-    }
-
-
-.box-area {
-    display: inline-flex; /* Display as flex container */
-    gap: 20px; /* Set the gap between cards */
-    padding-bottom: 20px; /* Add bottom padding to prevent cutting off last row */
-    overflow-x: auto;
-}
-
-.box {
-	border-radius: 10px;
-	position: relative;
-	overflow: hidden;
-	box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
-    height: 400px;
-    width: calc(300px - 20px); 
-    margin: 0px;
-    display: inline-block;
-}
-
-.box:first-child {
-    margin-left: 50px; /* Adjust the margin-left as needed */
-}
-
-/* Add extra margin to the right of the last card */
-.box:last-child {
-    margin-right: 40px; /* Adjust the margin-right as needed */
-}
-
-.box img{
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    display: block;
-    transition: transform 0.5s;
-}
-.overlay {
-	width: 100%;
-	height: 0;
-	background: linear-gradient(transparent,#1c1c1c 58%);
-	border-radius: 10px;
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	overflow: hidden;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	padding: 0 40px;
-	text-align: center;
-	font-size: 14px;
-	transition: height 0.5s;
-}
-.overlay h3 {
-	font-weight: 500;
-	margin-bottom: 5px;
-	margin-top: 80%;
-	font-family: 'Bebas Neue', sans-serif;
-	font-size: 30px;
-	letter-spacing: 2px;
-}
-.overlay a {
-	margin-top: 10px;
-	color: #262626;
-	text-decoration: none;
-	font-size: 14px;
-	background: #fff;
-	border-radius: 50px;
-	text-align: center;
-	padding: 5px 15px;
-}
-.box:hover img{
-    transform: scale(1.1);
-}
-.box:hover .overlay{
-    height: 100%;
-}
-.ratings {
-        margin-bottom: 10px;
-    }
-    .ratings .rating-star {
-        color: #ffd700;
-        cursor: pointer;
-    }
-    .ratings .rating-star.active {
-        color: #ffd700;
-    }
-    .ratings .rating-star.active i {
-    color: #ffd700;
-}
-
-
-
-</style>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

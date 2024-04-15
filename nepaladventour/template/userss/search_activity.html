@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{%load static%}
+<html>
+<head>
+<title>Search Hotels</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+<link rel="stylesheet" type="text/css" href="{% static 'css/search_activity.css' %}">
+</head>
+
+<body>
+    {%include 'shared/navBar.html'%}
+    <div class="wrapper" style="background-image: url('tech.jpg');">
+    <div class="inner">
+    <div class="image-holder">
+    <img src="{% static 'images/search activity form/activity form.jpg' %}" alt="image" style="height: 500px;">
+    </div>
+
+    <form action="{% url 'activity_search_results' %}" method="get">
+        {% csrf_token %}
+        <h3 style="color: black;">Search Activities</h3>
+        <br>
+        <!-- Choose Activity Dropdown -->
+        <div class="form-wrapper">
+            <h2 style="color: black; padding-bottom: 15px;">Choose Activity:</h2>
+            <select name="activity_name" id="activity" class="form-control">
+                <option value="" disabled selected>Select an activity</option>
+                {% for activity_name in activities %}
+                    <option value="{{ activity_name }}">{{ activity_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-wrapper">
+            <h2 style="color: black; padding-bottom: 15px;">Set Range (in KM):</h2>
+            <input type="range" name="price" id="price" min="0" max="500" value="500" class="form-control" oninput="priceOutput.value=parseInt(price.value)">
+            <output id="priceOutput" style="color: black;">500</output> 
+        </div>
+        
+
+        <button type="submit">Search</button>
+    </form>
+    
+    </div>
+    </div>
+</body>
+</html>

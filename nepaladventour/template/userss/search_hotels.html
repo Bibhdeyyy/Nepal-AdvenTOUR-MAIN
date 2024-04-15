@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{%load static%}
+<html>
+<head>
+<title>Search Hotels</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+<link rel="stylesheet" type="text/css" href="{% static 'css/search_hotels.css' %}">
+</head>
+
+<body>
+    {%include 'shared/navBar.html'%}
+    <div class="wrapper" style="background-image: url('tech.jpg');">
+    <div class="inner">
+    <div class="image-holder">
+    <img src="{% static 'images/search hotel form/form photo.jpg' %}" alt="image">
+    </div>
+
+    <form action="{% url 'search_hotel_results' %}" method="get">
+        {% csrf_token %}
+        <h3 style="color: black;">Search Hotels</h3>
+        <br>
+
+        <!-- Choose City Dropdown -->
+        <div class="form-wrapper">
+            <h2 style="color: black; padding-bottom: 15px;">Choose City:</h2>
+            <select name="city" id="city" class="form-control">
+                <option value="" disabled selected>Select a city</option>
+                {% for city in cities %}
+                    <option value="{{ city }}">{{ city }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Type of Hotel Dropdown -->
+        <div class="form-wrapper">
+            <h2 style="color: black; padding-bottom: 15px;">Type of Hotel:</h2>
+            <select name="type_of_hotel" id="type_of_hotel" class="form-control">
+                <option value="" disabled selected>Select type of hotel</option>
+                {% for type_of_hotel in types_of_hotels %}
+                    <option value="{{ type_of_hotel }}">{{ type_of_hotel }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Budget Dropdown -->
+        <div class="form-wrapper">
+            <h2 style="color: black; padding-bottom: 15px;">Budget:</h2>
+            <select name="budget" id="budget" class="form-control">
+                <option value="" disabled selected>Select your budget</option>
+                {% for budget in budgets %}
+                    <option value="{{ budget }}">{{ budget }}</option>
+                {% endfor %}
+            </select>
+        </div>    
+
+        <button type="submit">Search</button>
+    </form>
+    
+    </div>
+    </div>
+</body>
+</html>
