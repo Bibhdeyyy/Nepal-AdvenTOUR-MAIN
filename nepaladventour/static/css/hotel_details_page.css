@@ -6,10 +6,11 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-.flex-box{
+.flex-box {
     display: flex;
-    width: 1400px;
+    flex-wrap: wrap;  /* Allows items to wrap as needed */
     margin: 10px;
+    max-width: 100%;  /* Ensures it does not overflow the screen width */
 }
 .left{
     width: 40%;
@@ -39,6 +40,10 @@
 }
 .small-img:hover img{
     transform: scale(1.2);
+}
+.big-img, .big-img img, .small-img, .small-img img {
+    width: 100%;
+    height: auto;  /* Maintain aspect ratio */
 }
 .url{
     font-size: 16px;
@@ -88,18 +93,20 @@
     text-align: center;
     margin-left: 15px;
 }
-.btn-box{
+.btn-box {
     display: flex;
-    margin-top: 40px;
+    flex-direction: column;  /* Stack buttons vertically on smaller screens */
+    gap: 10px;  /* Space between buttons */
 }
-.btn-box button{
-    font-size: 18px;
-    padding: 8px 25px;
+.btn-box button {
+    font-size: 1rem;  /* Responsive font size */
+    padding: 10px 20px;
     border: none;
-    outline: none;
     border-radius: 6px;
     cursor: pointer;
-    color: white;
+    transition: background-color 0.3s ease;  /* Smooth transition for hover effect */
+    color: #fff;
+    width: 100%;  /* Full width for better touch targets on mobile */
 }
 .cart-btn{
     background-color: #ff5e00;
@@ -118,4 +125,22 @@
     width: calc(100% - 300px);
     margin-left: 350px;
     margin-top: -55px;
+}
+.left, .right {
+    width: 100%;  /* Full width on smaller screens */
+    margin-top: 10px;
+}
+
+@media (min-width: 768px) {
+    .left, .right {
+        width: 50%;  /* Split screen on larger devices */
+    }
+    .right {
+        margin-left: 20px;  /* Spacing between columns */
+    }
+}   
+@media (min-width: 768px) {
+    .btn-box {
+        flex-direction: row;  /* Side by side on larger screens */
+    }
 }
