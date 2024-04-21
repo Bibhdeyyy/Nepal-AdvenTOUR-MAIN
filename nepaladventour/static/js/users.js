@@ -17,3 +17,12 @@ $(document).ready(function() {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const alerts = document.querySelectorAll('.custom-alert');
+    alerts.forEach(function(alert) {
+        setTimeout(function() {
+            alert.style.display = 'none';
+        }, 5000); // 5000 milliseconds = 5 seconds
+    });
+});

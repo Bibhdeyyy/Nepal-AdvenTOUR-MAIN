@@ -1,0 +1,77 @@
+<html lang="en">
+{%load static%}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ activity.name }} Details</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/activity_details_page.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+</head>
+<body style="background-color: #292a2d;">
+        {%include 'shared/navBar.html'%}
+
+    <div class="flex-box">
+        <div class="left">
+            <div style="height:310px ;">
+            <div class="big-img">
+               <img id="main-image" src="{{ activity.picture.url }}" alt="Main image of {{ activity.name }}"
+         style="height: 300px; width: 450px; margin-right: 200px;" onclick="resetMainImage()">
+            </div>
+        </div>
+        <div style="width: 210px;">
+            {% for image in activity.images.all %}
+            <div class="images">
+                <div class="small-img">
+                  <img src="{{ image.image.url }}" alt="Additional image of {{ activty.name }}" onclick="showImg(this.src)"/>
+                </div>
+            </div>
+            {%endfor%} 
+        </div> 
+        
+        </div>
+
+        <div class="right">
+            <div class="pname" style="color: whitesmoke;"><h3>{{ activity.name }}</h3></div>
+            <div class="ratings" style="padding-bottom: 20px;">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+               <div class="price" style="color: whitesmoke;"><h5>Price: Rs {{ activity.price }}</h5></div>
+               <div class="price" style="color: whitesmoke;margin-right: 550px;"><h5>Location: {{ activity.address }}</h5></div>
+            </div>
+            
+            <div style="display: flex;justify-content: space-between;">
+               <div class="price" style="color: whitesmoke;"><h5>City: {{ activity.city }}</h5></div>
+               <div class="price" style="color: whitesmoke;margin-right: 550px;"><h5>Contact: {{ activity.contact }}</h5></div>
+            </div>
+            <div class="price" style="color: whitesmoke;padding-right: 170px;"><h5>Age Required: {{ activity.age_required }}</h5></div>
+            <div class="btn-box" style="padding-bottom: 20px;">
+                <a href="{% url 'add_activity_review' activity.id %}"><button class="cart-btn" ><i class="fa-solid fa-plus"></i> Add Review</button></a>
+                <a href="https://www.google.com/maps" target="_blank"><button class="buy-btn"><i class="fa-solid fa-location-dot "></i> Get Routes</button></a>
+            </div>
+            <h2 style="color: whitesmoke;">You may also like</h2>
+            
+        </div>
+    </div>
+
+
+    <script>
+        let bigImg = document.querySelector('.big-img img');
+        function showImg(pic){
+            bigImg.src = pic;
+        }
+        var mainImageSrc = "{{ activity.picture.url }}";
+
+        function resetMainImage() {
+        document.getElementById('main-image').src = mainImageSrc;
+}
+    </script>
+</body>
+</html>

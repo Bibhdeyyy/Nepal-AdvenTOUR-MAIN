@@ -11,12 +11,12 @@ body{
   justify-content: center;
   align-items: center;
   padding: 10px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+  background: #292a2d;
 }
 .container{
   max-width: 700px;
   width: 100%;
-  background-color: #fff;
+  background-color: #FFF8F0;
   padding: 25px 30px;
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.15);
@@ -34,7 +34,7 @@ body{
   height: 3px;
   width: 30px;
   border-radius: 5px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+  background: #26C485;
 }
 .content form .user-details{
   display: flex;
@@ -64,7 +64,7 @@ form .input-box span.details{
 }
 .user-details .input-box input:focus,
 .user-details .input-box input:valid{
-  border-color: #9b59b6;
+  border-color: #26C485;
 }
  form .gender-details .gender-title{
   font-size: 20px;
@@ -86,7 +86,7 @@ form .input-box span.details{
   width: 18px;
   border-radius: 50%;
   margin-right: 10px;
-  background: #d9d9d9;
+  background: #26C485;
   border: 5px solid transparent;
   transition: all 0.3s ease;
 }
@@ -116,11 +116,11 @@ form .input-box span.details{
    letter-spacing: 1px;
    cursor: pointer;
    transition: all 0.3s ease;
-   background: linear-gradient(135deg, #71b7e6, #9b59b6);
+   background: #007C77;
  }
  form .button input:hover{
   /* transform: scale(0.99); */
-  background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+  background:#26C485;
   }
  @media(max-width: 584px){
  .container{
@@ -198,13 +198,51 @@ form .user-details .input-box{
     width: calc(100% - 20px);
     outline: none;
     padding-left: 15px;
-    border: 1px solid #ccc;
+    border: 1px solid #26C485 ;
     border-radius: 5px;
     transition: all 0.3s ease;
 }
 
 .input-box .social-media-input input:focus,
 .input-box .social-media-input input:valid {
-    border-color: #9b59b6;
+    border-color: #26C485;
 }
 
+/* alert message */
+.custom-alert {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  position: relative;
+  background-color: #fff3cd; /* Light yellow background */
+  border-color: #ffeeba; /* Light yellow border */
+  color: #856404; /* Text color for warning alerts */
+}
+
+.custom-alert.alert-warning {
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+  color: #856404;
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.75rem 1.25rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #000;
+  cursor: pointer;
+}
+
+.close-button span {
+  display: block;
+}
+
+.close-button:hover {
+  color: #343a40;
+}

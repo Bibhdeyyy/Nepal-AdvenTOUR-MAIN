@@ -7,6 +7,8 @@
 body{
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
+	background-color: rgb(228, 228, 228);
+	
 }
 
 .wave{
@@ -210,4 +212,5 @@ form{
 		justify-content: center;
 	}
 }
+
 

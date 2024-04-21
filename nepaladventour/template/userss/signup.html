@@ -9,8 +9,17 @@
     <title>Sign up</title>
 </head>
 <body>
+  <!-- Alert message -->
+  <div class="container">
+  {% if error_message %}
+  <div class="custom-alert alert-warning" role="alert" id="error-message">
+  {{ error_message }}
+  <button type="button" class="close-button" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  {% endif %}
 
-<div class="container">
   <div class="title">Sign up</div>
   <div class="content">
     <form class="registration-form" action="{% url 'signup' %}" method="post" enctype="multipart/form-data">
@@ -36,7 +45,7 @@
             <span class="details">Profile Picture</span>
             <label class="fake-file-input">
                 <input type="file" name="profile_picture" accept="image/*" required onchange="updateFileName(this)" required>
-                <h5 style="font-weight: 500;">Upload File</h5>
+                <h7 style="font-weight: 450; font-size: 14px;">Upload File</h7>
             </label> 
             <div class="file-name" id="file-name"></div>
         </div>
@@ -73,10 +82,12 @@
       </div>
       <div class="button">
         <input type="submit" value="Signup" onsubmit="return validatePasswords();">
-        <p style="margin-left:170px;padding: 5px; font-family: 'Poppins', sans-serif;">Already have an account?<a href="{% url 'signin' %}">sign in</a></p>
+        <p style="margin-left:170px;padding: 5px; font-family: 'Poppins', sans-serif;">Already have an account?<a href="{% url 'signin' %}" style="text-decoration: none;"> Sign in</a></p>
       </div>
     </form>
+  
   </div>
+  
 </div>
 
 <script type="text/javascript" src="{% static 'js/signup.js' %}"></script>

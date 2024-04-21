@@ -15,7 +15,7 @@
 </head>
 <body>
     <div style="padding-bottom: 40px"></div>
-    <h1 style="padding-left: 70px;">Explore Activities</h1>
+    <h1 style="margin-left: 43%;">Explore Activities</h1>
     <div id="card-area">
         <div class="wrapper">
             <div class="container">
@@ -27,7 +27,7 @@
                             <h3>{{ activity.name }}</h3>
                             <p>{{ activity.description }}</p>
                             <p>Rating: {{ activity.average_rating|default:"No ratings yet" }}</p>
-                            <a href="#">Explore</a>
+                            <a href="{% url 'activity_details' activity.id %}">Explore</a>
                         </div>
                     </div>
                     {% endfor %}

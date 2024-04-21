@@ -1,0 +1,103 @@
+<html lang="en">
+{%load static%}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ hotel.name }} Details</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/hotel_details_page.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body style="background-color: #292a2d;">
+        {%include 'shared/navBar.html'%}
+
+    <div class="flex-box">
+        <div class="left">
+            
+            <div class="big-img">
+               <img id="main-image" src="{{ hotel.picture.url }}" alt="Main image of {{ hotel.name }}"
+         style="height: 400px; width: 660px; margin-right: 200px;" onclick="resetMainImage()">
+            </div>
+            {% for image in hotel.images.all %}
+            <div class="images">
+                <div class="small-img">
+                  <img src="{{ image.image.url }}" alt="Additional image of {{ hotel.name }}" onclick="showImg(this.src)"/>
+                </div>
+            </div>
+            {%endfor%}  
+        </div>
+        
+        <div class="right">
+            <div class="pname" style="color: whitesmoke;"><h2>{{ hotel.name }}</h2></div>
+            <div class="ratings" style="padding-bottom: 20px;">
+                <div class="price" style="color: whitesmoke; margin-top: 20px; display: flex;">
+                    <h4 style="margin-top: 15px; margin-right: 10px;">Ratings: </h4>
+                    <h1 style="color: rgb(104, 242, 104);">{{ hotel.rating }}</h1>
+                </div>
+            </div>
+
+            <div style="display: flex;">
+               <div class="price" style="color: whitesmoke;padding-right: 170px;"><h4>Price: Rs {{ hotel.price }}</h4></div>
+               <div class="price" style="color: whitesmoke;"><h4>Location: {{ hotel.address }}</h4></div>
+            </div>
+            
+            <div style="display: flex;">
+               <div class="price" style="color: whitesmoke;padding-right: 170px;"><h4>City: {{ hotel.city }}</h4></div>
+               <div class="price" style="color: whitesmoke;"><h4>Contact: {{ hotel.contact }}</h4></div>
+            </div>
+            <div class="size">
+                <a href="#" class="psize active" style="text-decoration: none;"><i class="fa-regular fa-thumbs-up fa-2x"></i></i></a>
+                <a href="#" class="psize active" style="text-decoration: none;"><i class="fa-regular fa-thumbs-down fa-2x"></i></a>
+            </div>
+            <div class="btn-box">
+                <a href="{% url 'add_hotel_review' hotel.id %}"><button class="cart-btn" ><i class="fa-solid fa-plus"></i> Add Review</button></a>
+                <a href="https://www.google.com/maps" target="_blank"><button class="buy-btn"><i class="fa-solid fa-location-dot "></i> Get Routes</button></a>
+            </div>
+            <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+
+        </div>
+    </div>
+    
+
+    <script>
+        let bigImg = document.querySelector('.big-img img');
+        function showImg(pic){
+            bigImg.src = pic;
+        }
+        var mainImageSrc = "{{ hotel.picture.url }}";
+
+        function resetMainImage() {
+        document.getElementById('main-image').src = mainImageSrc;
+}
+    </script>
+    <script type="text/javascript" src="{% static 'js/hotel_details_page.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1o6-3uZwjEypw8203VsReL1i0npeUO_g&callback=initMap" async defer></script>
+    <script>
+        let map;
+        let marker;
+    
+        function initMap() {
+            // Initialize the map at the hotel's location
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: {{ latitude }}, lng: {{ longitude }}}, // Use the context variables
+                zoom: 15 // Adjust zoom level as needed
+            });
+            marker = new google.maps.Marker({
+                position: {lat: {{ latitude }}, lng: {{ longitude }}},
+                map: map,
+                title: '{{ hotel.name }}'
+            });
+        }
+    
+        // As the map is initialized on load, no need to set this in the button click unless you need to recenter or something similar
+        document.querySelector('.buy-btn').addEventListener('click', function() {
+            map.setCenter(new google.maps.LatLng({{ latitude }}, {{ longitude }}));
+            marker.setPosition(new google.maps.LatLng({{ latitude }}, {{ longitude }}));
+        });
+    </script>
+    
+    
+    
+</body>
+</html>

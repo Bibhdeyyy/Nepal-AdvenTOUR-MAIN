@@ -28,7 +28,7 @@
                         <h4 class="card-title">{{ hotel.name }}</h4>
                         <p class="card-text">City: {{ hotel.city }}<br>
                              Type: {{ hotel.type_of_hotel }} <br>Price: NRs {{ hotel.price }}</p>
-                        <a href="#" class="btn btn-primary">Details</a>
+                             <a href="{% url 'hotel_details' hotel.id %}" class="btn btn-primary">Details</a>
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                             <h4 class="card-title">{{ hotel.name }}</h4>
                             <p class="card-text">City: {{ hotel.address }}<br>
                                  Type: {{ hotel.city }} <br>Price: NRs {{ hotel.price }}</p>
-                            <a href="#" class="btn btn-primary">Details</a>
+                            <a href="{% url 'hotel_details' hotel.id %}" class="btn btn-primary">Details</a>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                     <div class="card-body">
                         <h4 class="card-title">{{ hotel.name }}</h4>
                         <p class="card-text">City: {{ hotel.city }}, Type: {{ hotel.type_of_hotel }}, Price: NRs {{ hotel.price }}</p>
-                        <a href="#" class="btn btn-primary">Details</a>
+                        <a href="{% url 'hotel_details' hotel.id %}" class="btn btn-primary">Details</a>
                     </div>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                     <div class="card-body">
                         <h4 class="card-title">{{ hotel.name }}</h4>
                         <p class="card-text">City: {{ hotel.city }}, Type: {{ hotel.type_of_hotel }}, Price: NRs {{ hotel.price }}</p>
-                        <a href="#" class="btn btn-primary">Details</a>
+                        <a href="{% url 'hotel_details' hotel.id %}" class="btn btn-primary">Details</a>
                     </div>
                 </div>
             </div>

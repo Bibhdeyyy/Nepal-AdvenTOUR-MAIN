@@ -15,22 +15,57 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.http import HttpResponseNotAllowed
 from django.db.models import Avg
+from geopy.distance import geodesic
+
 # Home Page
 def home(request):
     if request.user.is_authenticated:
+        
+        if request.user.is_superuser or request.user.is_staff:
+            return redirect('/admin_dashboard/')
         return render(request, "userss/home.html")
+    
     else:
         return redirect('/signin')
+    
+
+def get_hotels_nearby(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'User not authenticated'}, status=401)
+    
+    latitude = float(request.GET.get('lat', 0))
+    longitude = float(request.GET.get('lon', 0))
+    user_location = (latitude, longitude)
+    nearby_hotels = []
+
+    # Assuming there is a way to determine user's city from their profile
+    user_city = request.user.profile.city  # Ensure your user model has a profile with a city field
+
+    if latitude and longitude:
+        # Filter hotels based on the city from the user's profile
+        all_hotels = Hotel.objects.filter(city=user_city)
+        for hotel in all_hotels:
+            hotel_location = (hotel.latitude, hotel.longitude)
+            if geodesic(user_location, hotel_location).km <= 10:  # Assuming you want to show hotels within 10 km
+                nearby_hotels.append({
+                    'name': hotel.name,
+                    'type_of_hotel': hotel.type_of_hotel,
+                    'price': float(hotel.price),
+                    'picture_url': hotel.picture if hotel.picture else "Default_Image_URL"
+                })
+
+    return JsonResponse({'hotels': nearby_hotels})
+
 
 
 @login_required
 def user_profile(request):
     return render(request, 'userss/user_profile.html', {'user': request.user})
 
+#User edit profile
 @login_required
 def edit_profile(request):
-    # Assuming 'profile' is an extension of the Django user, related by a OneToOneField to the Django User model
-    user_profile = request.user  # Access the user's profile directly since profile is an AbstractUser extension
+    user_profile = request.user  # Access the user's profile
 
     if request.method == 'POST':
         fullname = request.POST.get('fullname', user_profile.fullname)
@@ -38,7 +73,7 @@ def edit_profile(request):
         connect = request.POST.get('connect', user_profile.connect)
         social_media = request.POST.get('social_media', user_profile.social_media)
 
-        # For profile picture, because it's a file, we handle it a bit differently
+        #Handling Profile Picture
         profile_picture = request.FILES.get('profile_picture')
         if profile_picture:
             user_profile.profile_picture = profile_picture
@@ -62,29 +97,31 @@ def edit_profile(request):
 
 # Login Page
 def signin(request):
+    # Check if the current request is a POST request, indicating form submission
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
         
-        # Authenticate the user
+        # Attempt to authenticate the user with the provided credentials
         user = authenticate(request, username=username, password=password)
 
+        # If the authentication was successful, `user` will not be None
         if user is not None:
-            # Log the user in
             login(request, user)
 
-            # Check if the user is an admin 
+            # Check if the logged-in user has admin privileges
             if user.is_superuser or user.is_staff:
                 return redirect('/admin_dashboard/') 
             else:
-                # Redirect to a general user page
                 return redirect('/home')  
         else:
-            # If authentication fails, return an error message
+            # Authentication failed, set an error message
             error_message = 'Authentication failed. Please check your username and password.'
+
+            # Re-render the login page with the error message
             return render(request, "userss/login.html", {'error_message': error_message})
     else:
-        # If not a POST request, just render the login page
+        # If the request is not a POST request (e.g., GET), simply display the login page
         return render(request, "userss/login.html")
 
 # Logout
@@ -94,39 +131,55 @@ def signout(request):
 
 # Signup Page
 def signup(request):
+    # Check if the incoming request is a POST request
     if request.method == "POST":
+        # Extracting user d etails from the POST request
         fullname = request.POST.get('fullname')
         email = request.POST.get('email')
         username = request.POST.get('username')
         password = request.POST.get('password')
         confirmpassword = request.POST.get('confirmpassword')
-        profile_picture = request.FILES.get('profile_picture')
+        profile_picture = request.FILES.get('profile_picture')  # Handling file upload
         connect = request.POST.get('connect')
         social_media = request.POST.get('social_media')
 
-        # Check if the username already exists before creating a new user
+        # Verify if the username is already taken
         if profile.objects.filter(username=username).exists():
+            # Return an error message if the username exists
             return render(request, 'userss/signup.html', {'error_message': 'Username already exists'})
         elif password != confirmpassword:
+            # Check if passwords match
             return render(request, 'userss/signup.html', {'error_message': 'Passwords do not match'})
         else:
-            #Creating User
-            user = profile.objects.create_user(username=username, password=password, email=email, fullname=fullname, connect=connect, social_media=social_media)
+            # Create a new user if validations pass
+            user = profile.objects.create_user(username=username, password=password, email=email, 
+                                               fullname=fullname, connect=connect, social_media=social_media)
 
-            # Handling profile_picture separately because it's a file field
+            # Save the profile picture if provided
             if profile_picture:
                 user.profile_picture = profile_picture
 
+            # Save user details to the database
             user.save()
 
+            # Redirect user to sign-in page after successful registration
             return redirect('/signin')
     else:
+        # Show the signup form if not a POST request
         return render(request, "userss/signup.html")
 
+
 # Admin Dashboard
+
 def admin_dashboard(request):
-    profiles = profile.objects.all()
-    return render(request, "admin/admin_dashboard.html", {'profiles': profiles})
+    if request.user.is_authenticated:
+        # Example data retrieval -- replace with actual data source logic
+        data = [300, 50, 100]  # This would come from your database or API
+        labels = ["Red", "Blue", "Yellow"]
+        return render(request, "admin/admin_dashboard.html", {'data': data, 'labels': labels})
+    else:
+        return render(request, "users/login.html")
+
 
 #Admins
 def admin_view(request):
@@ -155,7 +208,8 @@ def add_admin(request):
             return render(request, 'admin/admins/add_user.html', {'error_message': 'Passwords do not match'})
         else:
             #Creating User
-            user = profile.objects.create_superuser(username=username, password=password, email=email, fullname=fullname, connect=connect, social_media=social_media)
+            user = profile.objects.create_superuser(username=username, password=password, email=email,
+                                                     fullname=fullname, connect=connect, social_media=social_media)
 
             # Handling profile_picture separately because it's a file field
             if profile_picture:
@@ -209,7 +263,7 @@ def delete_admin(request, id):
             user_profile.delete()
             messages.success(request, "User deleted successfully.")
     else:
-        messages.error(request, "You are not authorized to delete users.")
+        messages.error(request, "You are not authorized to delete admins.")
     
     return redirect('admin_view')
 
@@ -222,6 +276,30 @@ def hotel_view(request):
     hotels = paginator.get_page(page)
     return render(request, "admin/hotels/hotel_view.html",{'hotels': hotels})
 
+def hotels(request):
+    # Fetch all hotel records from the database
+    hotels = Hotel.objects.all()
+
+    # Render the template, passing the 'hotels' context variable
+    return render(request, 'userss/hotels.html', {'hotels': hotels})
+
+@login_required
+def add_hotel_review(request, id):
+    hotel = get_object_or_404(Hotel, pk=id)
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        description = request.POST.get('description')
+        HotelReview.objects.create(
+            hotel=hotel,
+            user=request.user,  # Automatically capture the logged-in user's profile
+            rating=rating,
+            description=description,
+        )
+        # Redirect to the hotel detail page, or wherever is appropriate
+        return redirect('hotel_details', id=hotel)
+
+    # If GET, show the empty form -- though this can be skipped if form is POST only
+    return render(request, 'userss/add_hotel_review.html', {'hotel': hotel})
 
 def add_hotel(request):
     if request.method == "POST":
@@ -232,6 +310,8 @@ def add_hotel(request):
         budget = request.POST.get('budget')
         address = request.POST.get('address')
         city = request.POST.get('city')
+        longitude = request.POST.get('longitude')
+        latitude = request.POST.get('latitude')
         contact = request.POST.get('contact')
         description = request.POST.get('description')
         main_picture = request.FILES.get('picture')  # This fetches the main hotel picture
@@ -244,6 +324,8 @@ def add_hotel(request):
             budget=budget,
             address=address,
             city=city,
+            longitude = longitude,
+            latitude = latitude,
             contact=contact,
             description=description,
             picture=main_picture  # Assign the main picture here
@@ -274,6 +356,8 @@ def edit_hotel(request, id):
         hotel.budget = request.POST.get('budget', hotel.budget)
         hotel.address = request.POST.get('address', hotel.address)
         hotel.city = request.POST.get('city', hotel.city)
+        hotel.longitude = request.POST.get('longitude', hotel.longitude)
+        hotel.latitude = request.POST.get('latitude', hotel.latitude)
         hotel.contact = request.POST.get('contact', hotel.contact)
         hotel.description = request.POST.get('description', hotel.description)
         
@@ -427,12 +511,34 @@ def activity_review(request):
 
     return render(request, "admin/activity_reviews/activity_review.html", {'activity_reviews':activity_reviews})
 
+@login_required
+def add_activity_review(request, id):
+    activity = get_object_or_404(Activity, pk=id)  # Ensure the activity exists
+    if request.method == 'POST':
+        rating = request.POST.get('rating')  # Capture the rating from the form
+        description = request.POST.get('description')  # Capture the review description from the form
+        ActivityReview.objects.create(
+            activity=activity,
+            user=request.user,  # Automatically capture the logged-in user's profile
+            rating=rating,
+            description=description,
+        )
+        # Redirect to the activity detail page, or wherever is appropriate
+        return redirect('activity_details', id=activity.id)
+
+    # If GET, show the empty form -- though this can be skipped if form is POST only
+    return render(request, 'userss/add_activity_review.html', {'activity': activity})
+
+
 def delete_activity_review(request, id):
     activity_reviews = ActivityReview.objects.get(id=id)
     activity_reviews.delete()
     messages.success(request, "Activity Reviews deleted successfully.")
     return redirect('activity_review')
 
+def activity_details(request, id):
+    activity = get_object_or_404(Activity, pk=id)
+    return render(request, 'userss/activity_details_page.html', {'activity':activity})
 
 # Navbar
 def navBar(request):
@@ -442,8 +548,18 @@ def navBar(request):
 def footer(request):
     return render(request, "shared/footer.html")
 
-def hotels(request):
-    return render(request, "userss/Hotels.html")
+def about_us(request):
+    return render(request, "userss/about_us.html")
+
+
+def hotel_details(request, id):
+    hotel = get_object_or_404(Hotel, pk=id)
+    context = {
+        'hotel': hotel,
+        'latitude': hotel.latitude,
+        'longitude': hotel.longitude
+    }
+    return render(request, 'userss/hotel_details_page.html', context)
 
 
 
@@ -573,6 +689,7 @@ def delete_user(request, id):
     messages.info(request, "User Deleted Successfully")
     return redirect('user_view')
 
+
 def search_results(request):
     query = request.GET.get('query', '')
     hotels = Hotel.objects.filter(city__icontains=query)
@@ -604,3 +721,4 @@ def activities(request):
     )
     
     return render(request, 'userss/activities.html', {'activities': activities})
+

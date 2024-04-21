@@ -12,7 +12,7 @@
     <nav id="navbar">
       <div class="navbar">
         <i class="bx bx-menu"></i>
-        <div class="logo"><a href="{% url 'home' %}">Nepal AdvenTOUR</a></div>
+        <div class="logo"><a href="{% url 'home' %}"> Nepal AdvenTOUR</a></div>
         <div class="nav-links">
           <div class="sidebar-logo">
             <span class="logo-name">Nepal AdvenTOUR</span>
@@ -34,10 +34,33 @@
                 <li><a href="{%url 'search_hotels' %}">Search Hotels</a></li>
               </ul>
             </li>
-            <li><a href="#">ABOUT US</a></li>
+            <li><a href="{%url 'about_us' %}">ABOUT US</a></li>
           </ul>
         </div>
+
         <div class="navbuttons">
+          <div class="search-box">
+            <i class="bx bx-search"></i>
+            <div class="input-box">
+              <input type="text" placeholder="Search..." />
+            </div>
+          </div>
+          <div class="dropdown" style="text-decoration: none;">
+            <div class="dropdown-toggle" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="background-color: black;">
+              <i class="bx bx-user" style="color: white; font-size: 20px;"></i>
+            </div>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: black;position: absolute;right: 0;">
+              <a class="dropdown-item" href="{%url 'user_profile' %}" style="color: white;">Profile</a>
+              <form action="/signout/" method="post">
+                {% csrf_token %}
+                <button class="dropdown-item" type="submit" style="color: white;">Logout</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+
+        <!-- <div class="navbuttons">
           <div class="search-box">
             <i class="bx bx-search"></i>
             <div class="input-box">
@@ -48,7 +71,6 @@
             <i class="fas fa-search"></i>
     <div class="input-box">
         <input type="text" id="search-input" placeholder="Search...">
-        <!-- Add any other elements you need for search functionality -->
     </div>
             <i class="bx bx-user">
                 <ul class="js-sub-menu sub-menu">
@@ -63,7 +85,7 @@
                 </ul>
             </i>
           </div>
-        </div>
+        </div> -->
       </div>
     </nav>
   </head>

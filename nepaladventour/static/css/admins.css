@@ -36,10 +36,49 @@
     border-radius: 10px;
     cursor: pointer;
     background: transparent;
-    border: 1px solid ##1a2c3e;
+    border: 1px solid #1a2c3e;
   }
   .table button:hover{
     background:#233240;
     color: #fff;
     transition: 0.5rem;
   }
+
+  /* alert message */
+.custom-alert {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  position: relative;
+  background-color: #fff3cd; /* Light yellow background */
+  border-color: #ffeeba; /* Light yellow border */
+  color: #856404; /* Text color for warning alerts */
+}
+
+.custom-alert.alert-warning {
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+  color: #856404;
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.75rem 1.25rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #000;
+  cursor: pointer;
+}
+
+.close-button span {
+  display: block;
+}
+
+.close-button:hover {
+  color: #343a40;
+}

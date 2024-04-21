@@ -11,12 +11,13 @@
     <style>
     </style>
 </head>
-<body>
+<body style="background-color: #292a2d;"> 
     <div style="margin-left: 40px;">
     <!-- Top Matching Results -->
     {% if activities %}
     {% for activity in activities %}
-    <div class="card mt-4" style="height: 300px; width: 78%;">
+    <div class="card mt-4" style="height: 300px; width: 78%;background-color: #E9EDDE;border-radius: 1px; background: #e0e0e0;
+    box-shadow:  5px 5px 2px #5a5a5a,-5px -5px 2px #ffffff;">
         <div class="row">
             <div class="col-md-4">
                 <!-- Ensure there is a default image or check if the picture exists -->
@@ -32,7 +33,7 @@
                     <p>Required Age: {{ activity.age_required }} years</p>
                     <p>Price: ${{ activity.price }}</p>
                     <p>Status: {{ activity.status }}</p>
-                    <button class="btn btn-success">View Details</button>
+                    <button class="btn btn-success"><a href="{% url 'activity_details' activity.id %}" style="text-decoration: none;color: white;">View Details</a></button>
                 </div>
             </div>
         </div>

@@ -16,12 +16,16 @@ class Hotel(models.Model):
     type_of_hotel= models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     budget = models.DecimalField(max_digits=10, decimal_places=2)
+    rating = models.DecimalField(max_digits=2, decimal_places=1, null=True, blank=True)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=255, default='Default City')
     contact = models.CharField(max_length=255)
     description = models.TextField()
+    latitude = models.FloatField(default=0.0)
+    longitude = models.FloatField(default=0.0)
     #Main Picture of the Hotel
     picture = models.ImageField(upload_to='hotel_pics/')
+
     
 
     def __str__(self):

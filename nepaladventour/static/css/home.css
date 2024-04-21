@@ -100,60 +100,9 @@ body {
 }
 
 
-/* Welcome Content */
-
-#welcome-content{
-    background-color: var(--bg-color1);
-}
-#welcome-content p {
-    color: var(--color1);
-}
-/* Show more button */
-
-#welcome-content label {
-    background-color: #293b5f;
-    padding: 15px 0px;
-    color: #FFF;
-    width: 9em;
-    margin: 15px auto;
-    cursor: pointer;
-    text-align: center;
-    font-weight: 700;
-}
-
-.welcome-checkbox {
-    order: 2;
-}
-
-.welcome-description {
-    order: 1;
-    text-align: center;
-    max-height: 10em;
-    overflow: hidden;
-    transition: max-height 400ms linear;
-    will-change: max-height;
-}
-
-#welcome-content input[type="checkbox"]:checked~.welcome-description {
-    max-height: 80em;
-}
-
-#welcome-content input[type="checkbox"] {
-    display: none;
-}
-
-#welcome-content label::after {
-    content: "Show More";
-}
-
-#welcome-content input[type="checkbox"]:checked+label::after {
-    content: "Show Less";
-}
-/* correct */
-
 /* Destination */
 .destinations{
-    background-color: var(--bg-color2);
+    background-color: #292a2d;
 }
 #destinations .destination{
     position: relative;
@@ -183,18 +132,7 @@ body {
     font-weight: 600;    
 }
 
-/* Why Us */
 
-#why-us{
-    background-color: var(--bg-color1);
-}
-#why-us p{
-    color: var(--color1);
-}
-.icon {
-    font-size: 2.5rem;
-    color: var(--color1);
-}
 /* Packages */
 #packages {
     background-color: var(--bg-color2);

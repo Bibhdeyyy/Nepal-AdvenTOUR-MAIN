@@ -75,19 +75,23 @@
                     {% endif %}
                 </span>
             </div><br/>
-            
             {% if messages %}
-                <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-                </ul>
-            {% endif %}
+        <div class="container" style="margin-top: 10px;">
+        {% for message in messages %}
+        <div class="custom-alert alert-{{ message.tags }} alert-dismissible" role="alert">
+            {{ message }}
+            <button type="button" class="close-button" aria-label="Close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        </div>
+        {% endif %}
             </div>
          <br/>
         
   </div>
-
+  <script type="text/javascript" src="{% static 'js/admins.js' %}"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>

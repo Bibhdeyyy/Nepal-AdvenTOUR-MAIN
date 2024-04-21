@@ -8,6 +8,15 @@ body{
 	background: #1e1f21;
     color: #fff;
 }
+.container {
+    width: 100%; /* Set the width to be responsive */
+    max-width: 1280px; /* Adjust this to fit 4 cards considering padding and margins */
+    margin: auto; /* Center the container */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* This will space out the cards evenly */
+    padding: 0 20px; /* Adjust padding as needed */
+}
 .wrapper{
     overflow: hidden;
     position: relative;
@@ -15,33 +24,25 @@ body{
 #card-area{
     padding: 50px 0;
 }
-        .container {
-        overflow-x: auto;
-        padding: 0 20px; /* Add padding to both left and right sides of the container */
-        box-sizing: border-box; /* Include padding in the container's width */
-        display: flex; /* Use flexbox for the container */
-        gap: 20px; /* Set the gap between cards */
-        width: calc(950px * 4 + 1000px);
-        margin: auto;
+
+
+    .box-area {
+        width: 100%; /* Make the box-area take the full width of the container */
+        display: flex; /* Use flexbox for layout */
+        flex-wrap: wrap; /* Allow the items to wrap */
+        justify-content: space-around; /* Distribute space around items */
     }
 
-
-.box-area {
-    display: inline-flex; /* Display as flex container */
-    gap: 20px; /* Set the gap between cards */
-    padding-bottom: 20px; /* Add bottom padding to prevent cutting off last row */
-    overflow-x: auto;
-}
-
 .box {
-	border-radius: 10px;
-	position: relative;
-	overflow: hidden;
-	box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
-    height: 400px;
-    width: calc(300px - 20px); 
-    margin: 0px;
-    display: inline-block;
+    width: calc((100% - 60px) / 4); /* Subtract total gap space, then divide by 4 */
+    margin: 0 0px; /* Give some space on the left and right of each card */
+    flex: 0 0 auto; /* Prevent the box from growing or shrinking */
+    margin: 20px; /* Margin around each box */
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    height: 400px; /* Fixed height */
 }
 
 .box:first-child {
@@ -114,4 +115,15 @@ body{
     }
     .ratings .rating-star.active i {
     color: #ffd700;
+}
+@media screen and (max-width: 1200px) {
+    .box {
+        flex: 0 0 calc(50% - 40px); /* Adjust to 2 cards per row on smaller screens */
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .box {
+        flex: 0 0 calc(100% - 40px); /* Adjust to 1 card per row on mobile screens */
+    }
 }

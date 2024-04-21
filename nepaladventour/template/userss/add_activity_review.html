@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/add_activity_review.css' %}">
+    <title>Add Activity Review</title>
+</head>
+<body>
+
+<div class="container">
+  <div class="title">Register Activity</div>
+  <div class="content">
+    <form class="registration-form" action="{% url 'add_activity_review' activity.id %}" method="post">
+      {% csrf_token %}
+      <div class="user-details">
+
+        <div class="input-box">
+            <span class="details">Rating (1-5)</span>
+            <input type="number" name="rating" min="1" max="5" placeholder="Enter rating" required>
+        </div>
+
+        <div class="input-box">
+          <span class="details">Description</span>
+          <textarea name="description" placeholder="Enter description" required></textarea>
+        </div>
+
+      <div class="button">
+        <input type="submit" value="Add Review">
+      </div>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
