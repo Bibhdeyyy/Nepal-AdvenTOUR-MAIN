@@ -1,129 +1,71 @@
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif; 
-    box-sizing: border-box;
-}
 body{
-	background: #1e1f21;
-    color: #fff;
+    margin: 0;
+    font-family: Poppins;
 }
-.container {
-    width: 100%; /* Set the width to be responsive */
-    max-width: 1280px; /* Adjust this to fit 4 cards considering padding and margins */
-    margin: auto; /* Center the container */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; /* This will space out the cards evenly */
-    padding: 0 20px; /* Adjust padding as needed */
+a{
+    color: unset;
+    text-decoration: none;
 }
-.wrapper{
-    overflow: hidden;
-    position: relative;
+.container{
+    width: 1500px;
+    margin: auto;
+    max-width: 90vw;
+    text-align: center;
+    padding-top: 10px;
 }
-#card-area{
-    padding: 50px 0;
+.title{
+    font-size: xx-large;
+    padding: 20px 0;
+    margin-bottom: 20px;
 }
-
-
-    .box-area {
-        width: 100%; /* Make the box-area take the full width of the container */
-        display: flex; /* Use flexbox for layout */
-        flex-wrap: wrap; /* Allow the items to wrap */
-        justify-content: space-around; /* Distribute space around items */
-    }
-
-.box {
-    width: calc((100% - 60px) / 4); /* Subtract total gap space, then divide by 4 */
-    margin: 0 0px; /* Give some space on the left and right of each card */
-    flex: 0 0 auto; /* Prevent the box from growing or shrinking */
-    margin: 20px; /* Margin around each box */
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
-    border-radius: 10px;
-    position: relative;
-    overflow: hidden;
-    height: 400px; /* Fixed height */
+.listProduct .item img{
+    width: 90%;
+    border-radius: 0px;
+    background: #e0e0e0;
+    box-shadow:  5px 5px 10px #5a5a5a,
+             -5px -5px 10px #ffffff;
 }
-
-.box:first-child {
-    margin-left: 50px; /* Adjust the margin-left as needed */
+.listProduct{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
 }
-
-/* Add extra margin to the right of the last card */
-.box:last-child {
-    margin-right: 40px; /* Adjust the margin-right as needed */
+.listProduct .item{
+    background-color: #EEEEE6;
+    padding: 20px;
+    border-radius: 20px;
 }
-
-.box img{
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    display: block;
-    transition: transform 0.5s;
+.listProduct .item h2{
+    font-weight: 500;
+    font-size: large;
+    margin-top: 10px;
 }
-.overlay {
-	width: 100%;
-	height: 0;
-	background: linear-gradient(transparent,#1c1c1c 58%);
-	border-radius: 10px;
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	overflow: hidden;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	padding: 0 40px;
-	text-align: center;
-	font-size: 14px;
-	transition: height 0.5s;
+.listProduct .item .price{
+    letter-spacing: 7px;
+    font-size: small;
+    margin-top: 20px;
 }
-.overlay h3 {
-	font-weight: 500;
-	margin-bottom: 5px;
-	margin-top: 80%;
-	font-family: 'Bebas Neue', sans-serif;
-	font-size: 30px;
-	letter-spacing: 2px;
-}
-.overlay a {
-	margin-top: 10px;
-	color: #262626;
-	text-decoration: none;
-	font-size: 14px;
-	background: #fff;
-	border-radius: 50px;
-	text-align: center;
-	padding: 5px 15px;
-}
-.box:hover img{
-    transform: scale(1.1);
-}
-.box:hover .overlay{
-    height: 100%;
-}
-.ratings {
-        margin-bottom: 10px;
-    }
-    .ratings .rating-star {
-        color: #ffd700;
-        cursor: pointer;
-    }
-    .ratings .rating-star.active {
-        color: #ffd700;
-    }
-    .ratings .rating-star.active i {
-    color: #ffd700;
-}
-@media screen and (max-width: 1200px) {
-    .box {
-        flex: 0 0 calc(50% - 40px); /* Adjust to 2 cards per row on smaller screens */
-    }
+.detail-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #007BFF; /* Bootstrap primary blue */
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none; /* Removes underline */
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
 }
 
-@media screen and (max-width: 768px) {
-    .box {
-        flex: 0 0 calc(100% - 40px); /* Adjust to 1 card per row on mobile screens */
-    }
+.detail-button:hover, .detail-button:focus {
+    background-color: #0056b3; /* Darker blue on hover/focus */
+    color: white;
+    text-decoration: none; /* Ensures text remains non-underlined */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.detail-button:active {
+    background-color: #004085; /* Even darker blue when active/clicked */
+    transform: scale(0.95); /* Slightly shrink when clicked */
 }

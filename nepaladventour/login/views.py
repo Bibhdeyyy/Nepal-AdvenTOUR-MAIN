@@ -97,7 +97,6 @@ def edit_profile(request):
 
 # Login Page
 def signin(request):
-    # Check if the current request is a POST request, indicating form submission
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -105,11 +104,9 @@ def signin(request):
         # Attempt to authenticate the user with the provided credentials
         user = authenticate(request, username=username, password=password)
 
-        # If the authentication was successful, `user` will not be None
         if user is not None:
             login(request, user)
 
-            # Check if the logged-in user has admin privileges
             if user.is_superuser or user.is_staff:
                 return redirect('/admin_dashboard/') 
             else:
@@ -118,10 +115,8 @@ def signin(request):
             # Authentication failed, set an error message
             error_message = 'Authentication failed. Please check your username and password.'
 
-            # Re-render the login page with the error message
             return render(request, "userss/login.html", {'error_message': error_message})
     else:
-        # If the request is not a POST request (e.g., GET), simply display the login page
         return render(request, "userss/login.html")
 
 # Logout
@@ -145,11 +140,11 @@ def signup(request):
 
         # Verify if the username is already taken
         if profile.objects.filter(username=username).exists():
-            # Return an error message if the username exists
             return render(request, 'userss/signup.html', {'error_message': 'Username already exists'})
+        
         elif password != confirmpassword:
-            # Check if passwords match
             return render(request, 'userss/signup.html', {'error_message': 'Passwords do not match'})
+        
         else:
             # Create a new user if validations pass
             user = profile.objects.create_user(username=username, password=password, email=email, 
@@ -308,6 +303,7 @@ def add_hotel(request):
         type_of_hotel = request.POST.get('type_of_hotel')
         price = request.POST.get('price')
         budget = request.POST.get('budget')
+        rating = request.POST.get('rating')
         address = request.POST.get('address')
         city = request.POST.get('city')
         longitude = request.POST.get('longitude')
@@ -322,6 +318,7 @@ def add_hotel(request):
             type_of_hotel=type_of_hotel,
             price=price,
             budget=budget,
+            rating=rating,
             address=address,
             city=city,
             longitude = longitude,
@@ -409,21 +406,29 @@ def activity_view(request):
 def add_activity(request):
     if request.method == 'POST':
         name = request.POST.get('name')
+        type = request.POST.get('type')
         age_required = request.POST.get('age_required')
         price = request.POST.get('price')
         address = request.POST.get('address')
         city = request.POST.get('city')
         contact = request.POST.get('contact')
+        latitude = request.POST.get('latitude')
+        longitude = request.POST.get('longitude')
+        rating = request.POST.get('rating')
         status = request.POST.get('status')
         main_picture = request.FILES.get('picture')
         
         activity = Activity(
             name=name,
+            type=type,
             age_required=age_required,
             price=price,
             address=address,
             city=city,
             contact=contact,
+            latitude=latitude,
+            longitude=longitude,
+            rating=rating,
             status=status,
             picture=main_picture
         )
@@ -551,7 +556,7 @@ def footer(request):
 def about_us(request):
     return render(request, "userss/about_us.html")
 
-
+# Hotel Details Page
 def hotel_details(request, id):
     hotel = get_object_or_404(Hotel, pk=id)
     context = {
@@ -560,8 +565,6 @@ def hotel_details(request, id):
         'longitude': hotel.longitude
     }
     return render(request, 'userss/hotel_details_page.html', context)
-
-
 
 
 def search_hotels(request):
@@ -621,21 +624,19 @@ def filter_hotels(request):
     })
 
 def search_activity(request):
-    # This will fetch distinct activity names ordered by name
-    activities = Activity.objects.order_by('name').values_list('name', flat=True).distinct()
+    activities = Activity.objects.order_by('type').values_list('type', flat=True).distinct()
     return render(request, 'userss/search_activity.html', {
         'activities': activities
     })
 
 def activity_search_results(request):
-    # Get the activity name from the GET request
-    activity_name = request.GET.get('activity_name', '')
+    activity_type = request.GET.get('activity_type', None)
+    
+    # Filter activities based on the selected name, show all if no type is specified
+    activities = Activity.objects.filter(type=activity_type) if activity_type else Activity.objects.all()
 
-    # Filter activities based on the selected name
-    activities = Activity.objects.filter(name=activity_name) if activity_name else Activity.objects.none()
-
-    # Render a template with the filtered activities
     return render(request, 'userss/activity_search_results.html', {'activities': activities})
+
 
 #users
 def user_view(request):

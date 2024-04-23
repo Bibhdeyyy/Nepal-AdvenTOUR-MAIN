@@ -1,67 +1,28 @@
 <!DOCTYPE html>
-<!-- divinectorweb.com -->
-{%load static%}
+{% load static %}
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta content="IE=edge" http-equiv="X-UA-Compatible">
-	<title>CSS Cards with Overlay Hover Animation</title>
-	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity List</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/activities.css' %}">
-	{%include 'shared/navBar.html'%}
+    
 </head>
-<body>
-    <div style="padding-bottom: 40px"></div>
-    <h1 style="margin-left: 43%;">Explore Activities</h1>
-    <div id="card-area">
-        <div class="wrapper">
-            <div class="container">
-                <div class="box-area">
-                    {% for activity in activities %}
-                    <div class="box">
-                        <img src="{{ activity.picture.url }}" alt="{{ activity.name }}">
-                        <div class="overlay">
-                            <h3>{{ activity.name }}</h3>
-                            <p>{{ activity.description }}</p>
-                            <p>Rating: {{ activity.average_rating|default:"No ratings yet" }}</p>
-                            <a href="{% url 'activity_details' activity.id %}">Explore</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-
+<body style="background-color: #292a2d;">
+    {%include 'shared/navBar.html'%}
+    <div class="container">
+        <div class="title"><h2 style="color: whitesmoke;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Activities</h2></div>
+        <div class="listProduct">
+            {% for activity in activities %}
+            <div class="item" style="background-color: antiquewhite;">
+                <img src="{{ activity.picture.url}}" alt="Image of {{ activity.name }}" style="width: 100%; height: 220px;">
+                <h2>{{ activity.name }}</h2>
+                <div class="price">Rs {{ activity.price }}</div>
+                <a href="{% url 'activity_details' activity.id %}" class="detail-button">View Details</a>
             </div>
+            {% endfor %}
         </div>
     </div>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // JavaScript code here
-        const scrollLeft = document.querySelector('.scroll-left');
-        const scrollRight = document.querySelector('.scroll-right');
-        const container = document.querySelector('.container');
-
-        scrollLeft.addEventListener('click', () => {
-            if (container.scrollLeft > 0) { // Check if there are more cards to scroll to the left
-                container.scrollBy({
-                    left: -340, // Adjust scroll distance to the width of a single card + margin
-                    behavior: 'smooth'
-                });
-            }
-        });
-
-        scrollRight.addEventListener('click', () => {
-            if (container.scrollLeft < container.scrollWidth - container.clientWidth) { // Check if there are more cards to scroll to the right
-                container.scrollBy({
-                    left: 340, // Adjust scroll distance to the width of a single card + margin
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-</script>
+    
 </body>
 </html>

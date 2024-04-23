@@ -24,7 +24,7 @@
         <!-- Choose City Dropdown -->
         <div class="form-wrapper">
             <h2 style="color: black; padding-bottom: 15px;">Choose City:</h2>
-            <select name="city" id="city" class="form-control">
+            <select name="city" id="city" class="form-control" required>
                 <option value="" disabled selected>Select a city</option>
                 {% for city in cities %}
                     <option value="{{ city }}">{{ city }}</option>
@@ -35,7 +35,7 @@
         <!-- Type of Hotel Dropdown -->
         <div class="form-wrapper">
             <h2 style="color: black; padding-bottom: 15px;">Type of Hotel:</h2>
-            <select name="type_of_hotel" id="type_of_hotel" class="form-control">
+            <select name="type_of_hotel" id="type_of_hotel" class="form-control" required>
                 <option value="" disabled selected>Select type of hotel</option>
                 {% for type_of_hotel in types_of_hotels %}
                     <option value="{{ type_of_hotel }}">{{ type_of_hotel }}</option>
@@ -46,7 +46,7 @@
         <!-- Budget Dropdown -->
         <div class="form-wrapper">
             <h2 style="color: black; padding-bottom: 15px;">Budget:</h2>
-            <select name="budget" id="budget" class="form-control">
+            <select name="budget" id="budget" class="form-control" required>
                 <option value="" disabled selected>Select your budget</option>
                 {% for budget in budgets %}
                     <option value="{{ budget }}">{{ budget }}</option>

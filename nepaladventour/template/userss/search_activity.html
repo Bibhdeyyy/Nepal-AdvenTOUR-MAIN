@@ -23,10 +23,10 @@
         <!-- Choose Activity Dropdown -->
         <div class="form-wrapper">
             <h2 style="color: black; padding-bottom: 15px;">Choose Activity:</h2>
-            <select name="activity_name" id="activity" class="form-control">
+            <select name="activity_type" id="activity" class="form-control">
                 <option value="" disabled selected>Select an activity</option>
-                {% for activity_name in activities %}
-                    <option value="{{ activity_name }}">{{ activity_name }}</option>
+                {% for activity_type in activities %}
+                    <option value="{{ activity_type }}">{{ activity_type }}</option>
                 {% endfor %}
             </select>
         </div>
