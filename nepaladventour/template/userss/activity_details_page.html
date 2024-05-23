@@ -177,15 +177,18 @@
             });
         }
     
-        document.getElementById('locationButton').addEventListener('click', function() {
-            var mapDiv = document.getElementById('map');
-            // Toggle map visibility and reinitialize map if necessary
-            if (mapDiv.style.display === 'none') {
-                mapDiv.style.display = 'block';
-                initMap(); // Reinitialize map to ensure it sizes correctly
-            } else {
-                mapDiv.style.display = 'none';
-            }
+        // Make sure the DOM is loaded before accessing elements
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('locationButton').addEventListener('click', function() {
+                var mapDiv = document.getElementById('map');
+                // Toggle map visibility and reinitialize map if necessary
+                if (mapDiv.style.display === 'none') {
+                    mapDiv.style.display = 'block';
+                    initMap(); // Reinitialize map to ensure it sizes correctly
+                } else {
+                    mapDiv.style.display = 'none';
+                }
+            });
         });
     </script>
 

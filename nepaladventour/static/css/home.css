@@ -222,7 +222,10 @@ body {
 #featured p {
     color: var(--color1);
 }
-
+.fixed-image {
+    width: 500px; 
+    height: 250px; 
+}
 .btn {
     margin: 10px 0;
     padding: 15px 45px;
@@ -235,6 +238,11 @@ body {
 
 .btn:hover{
     background-color: #293b5f;
+}
+
+/* Thin line */
+.white-line {
+    border-top: 1px solid #ffffff; /* White border line */
 }
 
 /* Blog */

@@ -20,11 +20,11 @@ from geopy.distance import geodesic
 # Home Page
 def home(request):
     if request.user.is_authenticated:
-        
         if request.user.is_superuser or request.user.is_staff:
             return redirect('/admin_dashboard/')
-        return render(request, "userss/home.html")
-    
+        else:
+            top_hotels = Hotel.objects.order_by('-rating')[:10]
+            return render(request, "userss/home.html", {'top_hotels': top_hotels})
     else:
         return redirect('/signin')
     

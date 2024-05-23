@@ -18,30 +18,41 @@
     <section id="slider">
         <div id="carouselExampleIndicators" class="carousel slide">
             <div class="carousel-inner">
-              <div class="carousel-item active">
+              <div class="carousel-item">
                 <div class="video-container" style="width: 100%; height: 660px;">
                     <video autoplay muted loop class="bg-video" style="opacity: 95%; filter: brightness(55%); position: relative; top: -150px; right: 150px;">
                         <source src="{% static 'videos/home_close.mp4' %}" type="video/mp4">
-                        Your browser does not support the video tag.
                     </video>
                 </div>
                 <div class="carousel-caption">
                     <h5>History Harmonizes Humanity</h5>
                 </div>
               </div>
+
               <div class="carousel-item">
-                <img src="{% static 'images/home/slider2.jpg' %}" class="d-block w-100" alt="...">
-                <div class="carousel-caption">
-                    <h5>Himalayan Majesty Calls</h5>
+                <div class="video-container" style="width: 100%; height: 660px;">
+                    <video autoplay muted loop class="bg-video" style="opacity: 95%; filter: brightness(55%); position: relative; top: -400px; right:500px;">
+                        <source src="{% static 'videos/Travel.mp4' %}" type="video/mp4">
+                    </video>
                 </div>
-            </div>
-              <div class="carousel-item">
-                <img src="{% static 'images/home/slider3.jpg' %}" class="d-block w-100" alt="...">
                 <div class="carousel-caption">
-                    <h5>Annapurna's Graceful Slopes</h5>
+                    <h5>Miles of Discovery</h5>
                 </div>
               </div>
+
+              <div class="carousel-item active">
+                <div class="video-container" style="width: 100%; height: 660px;">
+                    <video autoplay muted loop class="bg-video" style="opacity: 95%; filter: brightness(55%); position: relative;">
+                        <source src="{% static 'videos/Majestic.mp4' %}" type="video/mp4">
+                    </video>
+                </div>
+                <div class="carousel-caption">
+                    <h5>Majestic Peaks Await</h5>
+                </div>
+              </div>
+
             </div>
+
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>
@@ -118,58 +129,61 @@
             <div class="row align-items-center">
                 <div class="col-md-12">
                     <span class="subtitle">
-                        Choose Your Accomodation
-                </span>
-                <h2 class="mb-3">Featured Hotels</h2>
+                        Choose Your Accommodation
+                    </span>
+                    <h2 class="mb-3">Featured Hotels</h2>
                 </div>
             </div>
             <div class="swiper">
                 <div class="card-slider">
                     <div class="swiper-wrapper">
-
-                    <div class="swiper-slide">
-                        <div class="package card border-0 shadow">
-                            <div class="position-absolute top-0 left-0 ms-3 mt-3 z-1">
-                                <div class="label bg-success text-light">
-                                    Featured
+                        {% for hotel in top_hotels %}
+                        <div class="swiper-slide">
+                            <div class="package card border-0 shadow">
+                                <div class="position-absolute top-0 left-0 ms-3 mt-3 z-1">
+                                    <div class="label bg-success text-light">
+                                        Featured
+                                    </div>
+                                </div>
+                                <div class="package-img overflow-hidden">
+                                    {% if hotel.picture %}
+                                        <img src="{{ hotel.picture.url }}" class="img-fluid fixed-image" alt="{{ hotel.name }}">
+                                    {% else %}
+                                        <p>No image available</p>
+                                    {% endif %}
+                                </div>
+                                <div class="card-header border-bottom-0 px-4 pt-4">
+                                    <h6 class="package-title">{{ hotel.name }}</h6>
+                                    <div class="card-subtitle">
+                                        <span class="normal-separate"></span>
+                                        <span style="color: lightgreen;">
+                                            {{ hotel.rating }}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="card-footer border-top-0 px-4 pt-0 pb-4">
+                                    <h5 class="fs-5 m-0">
+                                        <span class="price">Rs {{ hotel.price }}</span>
+                                    </h5>
                                 </div>
                             </div>
-                            <div class="package-img overflow-hidden">
-                                <img src="{% static 'images/home/mardi.jpg' %}" class="img-fluid" alt = "">
-                            </div>
-                            <div class="card-header border-bottom-0 px-4 pt-4">
-                                <h6 class="package-title">Mardi Himal Trek</h6>
-                                <div class="card-subtitle">
-                                    <span class="duration">10 Days</span>
-                                    <span class="normal-seperate"></span>
-                                    <span>
-                                        <i class="lni lni-star-fill checked"></i>
-                                        <i class="lni lni-star-fill checked"></i>
-                                        <i class="lni lni-star-fill checked"></i>
-                                        <i class="lni lni-star-fill checked"></i>
-                                        <i class="lni lni-star-fill checked"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="card-footer border-top-0 px-4 pt-0 pb-4">
-                                <h5 class="fs-5 m-0">
-                                    <span class="price">Rs 67,800</span>
-                                </h5>
-                            </div>
-                        </div>
-                    </div> 
+                        </div> 
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div class="arrow my-2 justify-content-start">
-                <div class="prevArrowBtn">
-                    <i class="lni lni-chevron-left"></i>
-                </div>
-                <div class="nextArrowBtn">
-                    <i class="lni lni-chevron-right"></i>
+                <div class="arrow my-2 justify-content-start">
+                    <div class="prevArrowBtn">
+                        <i class="lni lni-chevron-left"></i>
+                    </div>
+                    <div class="nextArrowBtn">
+                        <i class="lni lni-chevron-right"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+    
+    
 
     <!--Blogs -->
     <section id="blog" class="pt-5">
@@ -243,8 +257,8 @@
             </div>
         </div>
     </section>
+    <div class="white-line"></div>
 
-    <!-- Activity of the Month -->
     <section>
         <section id="featured" class="py-5">
             <div class="container py-5">
