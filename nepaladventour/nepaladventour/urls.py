@@ -61,8 +61,6 @@ urlpatterns = [
     path('delete_activity_review/<int:id>',delete_activity_review, name="delete_activity_review"),
 
     path('about_us/',about_us, name="about_us"),
-
-    path('get_hotels_nearby', get_hotels_nearby, name='get_hotels_nearby'),
-    
+        
     path('add_activity_review<int:id>/', add_activity_review, name='add_activity_review'),
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

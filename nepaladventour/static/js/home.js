@@ -33,3 +33,27 @@ function scrollToTop() {
 document.addEventListener("scroll", function () {
   scrollTopBtn.classList.toggle("visible", window.scrollY >= limit);
 });
+
+
+//Popular Destinations
+document.addEventListener('DOMContentLoaded', function() {
+  const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+          if (entry.isIntersecting) {
+              const delayElements = entry.target.querySelectorAll('.delay-1, .delay-2, .delay-3, .delay-4, .delay-5, .delay-6');
+              delayElements.forEach(el => el.classList.add('fly-in'));
+              observer.unobserve(entry.target);
+          }
+      });
+  }, observerOptions);
+
+  const target = document.querySelector('#destinations');
+  observer.observe(target);
+});
+

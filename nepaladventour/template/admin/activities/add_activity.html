@@ -4,84 +4,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include the CSS file for styling -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
     <title>Admin | Add Activities</title>
 </head>
 <body>
 
 <div class="container">
+  <!-- Title of the form -->
   <div class="title">Register Activity</div>
   <div class="content">
+    <!-- Form for adding activities -->
     <form class="registration-form" action="{% url 'add_activity' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="user-details">
 
+        <!-- Input field for activity name -->
         <div class="input-box">
           <span class="details">Activity Name</span>
           <input type="text" name="name" placeholder="Enter activity name" required>
         </div>
 
+        <!-- Input field for activity type -->
         <div class="input-box">
           <span class="details">Type</span>
           <input type="text" name="type" placeholder="Enter activity type" required>
         </div>
 
+        <!-- Input field for minimum age required -->
         <div class="input-box">
           <span class="details">Age Required</span>
           <input type="number" name="age_required" placeholder="Enter minimum age required" required>
         </div>
 
+        <!-- Input field for activity price -->
         <div class="input-box">
           <span class="details">Price</span>
           <input type="number" step="0.01" name="price" placeholder="Enter price" required>
         </div>
 
+        <!-- Input field for activity address -->
         <div class="input-box">
           <span class="details">Address</span>
           <input type="text" name="address" placeholder="Enter address" required>
         </div>
 
+        <!-- Input field for city -->
         <div class="input-box">
           <span class="details">City</span>
           <input type="text" name="city" placeholder="Enter city" required>
         </div>
 
+        <!-- Input field for contact number -->
         <div class="input-box">
           <span class="details">Contact</span>
           <input type="text" name="contact" placeholder="Enter contact number" required>
         </div>
 
+        <!-- Input field for activity status -->
         <div class="input-box">
           <span class="details">Status</span>
           <input type="text" name="status" placeholder="Enter activity status (e.g., Available, Not Available)" required>
         </div>
         
+        <!-- Input field for latitude -->
         <div class="input-box">
           <span class="details">Latitude</span>
           <input type="text" name="latitude" placeholder="Enter latitude" required>
         </div>
         
+        <!-- Input field for longitude -->
         <div class="input-box">
           <span class="details">Longitude</span>
           <input type="text" name="longitude" placeholder="Enter longitude" required>
         </div>
 
+        <!-- Input field for rating -->
         <div class="input-box">
           <span class="details">Rating</span>
           <input type="text" name="rating" placeholder="Enter rating" required>
         </div>
 
-
+        <!-- Input field for main activity picture -->
         <div class="input-box file">
           <span class="details">Main Activity Picture</span>
           <input type="file" name="picture" accept="image/*" required>
         </div>
         
+        <!-- Input field for additional activity pictures -->
         <div class="input-box file">
             <span class="details">Additional Activity Picture</span>
             <input type="file" name="images" accept="image/*" multiple required>
         </div>    
 
+      </div>
+      <!-- Submit button -->
       <div class="button">
         <input type="submit" value="Add Activity">
       </div>

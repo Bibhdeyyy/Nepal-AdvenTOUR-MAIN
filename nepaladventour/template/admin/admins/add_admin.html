@@ -4,34 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link to CSS file -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+    <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/c697a669aa.js" crossorigin="anonymous"></script>
     <title>Sign up</title>
 </head>
 <body>
 
 <div class="container">
+  <!-- Title -->
   <div class="title">Sign up</div>
+  <!-- Form content -->
   <div class="content">
     <form class="registration-form" action="{% url 'add_admin' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="user-details">
 
+        <!-- Full Name input -->
         <div class="input-box">
           <span class="details">Full Name</span>
           <input type="text" name="fullname" placeholder="enter your fullname" required><br>
         </div>
 
+        <!-- Email input -->
         <div class="input-box">
           <span class="details">Email</span>
           <input type="email" name="email" placeholder="enter your email" required><br>  
         </div>    
-        
+
+        <!-- Username input -->
         <div class="input-box">
           <span class="details">Username</span>
           <input type="text" name="username" placeholder="enter your username" required><br>
         </div>
 
+        <!-- Profile Picture input -->
         <div class="input-box file">
             <span class="details">Profile Picture</span>
             <label class="fake-file-input">
@@ -40,25 +48,26 @@
             </label> 
             <div class="file-name" id="file-name"></div>
         </div>
-        
 
+        <!-- Password input -->
         <div class="input-box">
             <span class="details">Password</span>
             <input type="password" name="password" id="password" placeholder="enter your password" required oninput="checkPasswords();">
             <i class="fa fa-eye-slash" aria-hidden="true" onclick="togglePasswordVisibility('password')"></i>
         </div>
-        
 
+        <!-- Confirm Password input -->
         <div class="input-box">
             <span class="details">Confirm Password</span>
             <input type="password" name="confirmpassword" id="confirmpassword" placeholder="Re-enter your password" required oninput="checkPasswords();">
             <i class="fa fa-eye-slash" aria-hidden="true" onclick="togglePasswordVisibility('confirmpassword')"></i>
         </div>
-        
 
+        <!-- Error message for password mismatch -->
         <p id="password-error" style="color: red; display: none;">Passwords do not match</p>
       </div>      
       
+      <!-- Open to Connect with Travellers dropdown -->
       <div class="input-box">
         <span class="details">Open to Connect with Travellers:</span>
         <select name="connect" id="connect" onchange="toggleSocialMediaInput()" required>
@@ -67,18 +76,23 @@
       </select><br>
       </div><br>
 
+      <!-- Social Media Username input (conditional) -->
       <div id="social-media-input" style="display: None;" class="input-box">
         <span class="details">Social Media Username</span>
         <input style="height: 45px; width: calc(100% / 2 - 20px); outline: none; padding-left: 15px; border: 1px solid #ccc;" type="text" name="social_media" placeholder="enter your social media username"><br>
       </div>
+
+      <!-- Signup button -->
       <div class="button">
         <input type="submit" value="Signup" onsubmit="return validatePasswords();">
+        <!-- Sign in link -->
         <p style="margin-left:170px;padding: 5px; font-family: 'Poppins', sans-serif;">Already have an account?<a href="{% url 'signin' %}">sign in</a></p>
       </div>
     </form>
   </div>
 </div>
 
+<!-- JavaScript file -->
 <script type="text/javascript" src="{% static 'js/signup.js' %}"></script>
 </body>
 </html>

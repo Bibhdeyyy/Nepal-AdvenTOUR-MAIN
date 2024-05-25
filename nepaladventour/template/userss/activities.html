@@ -5,24 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Activity List</title>
+    <!-- Link to custom CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/activities.css' %}">
-    
 </head>
 <body style="background-color: #292a2d;">
-    {%include 'shared/navBar.html'%}
+    <!-- Include shared navigation bar -->
+    {% include 'shared/navBar.html' %}
+    
+    <!-- Main container -->
     <div class="container">
-        <div class="title"><h2 style="color: whitesmoke;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Activities</h2></div>
+        <!-- Title section -->
+        <div class="title">
+            <h2 style="color: whitesmoke; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Activities</h2>
+        </div>
+        
+        <!-- List of activities -->
         <div class="listProduct">
+            <!-- Loop through each activity and display its details -->
             {% for activity in activities %}
             <div class="item" style="background-color: antiquewhite;">
-                <img src="{{ activity.picture.url}}" alt="Image of {{ activity.name }}" style="width: 100%; height: 220px;">
+                <!-- Activity image -->
+                <img src="{{ activity.picture.url }}" alt="Image of {{ activity.name }}" style="width: 100%; height: 220px;">
+                <!-- Activity name -->
                 <h2>{{ activity.name }}</h2>
+                <!-- Activity price -->
                 <div class="price">Rs {{ activity.price }}</div>
+                <!-- Link to activity details -->
                 <a href="{% url 'activity_details' activity.id %}" class="detail-button">View Details</a>
             </div>
             {% endfor %}
         </div>
     </div>
-    
 </body>
 </html>

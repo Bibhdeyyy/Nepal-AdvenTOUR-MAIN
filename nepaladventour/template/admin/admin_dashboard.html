@@ -6,85 +6,349 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sidebar With Bootstrap</title>
+    <title>Admin Dashboard</title>
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/admin_dashboard.css' %}">
+    <!-- Chart.js for data visualization -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
 </head>
 <body>
-    
     <div class="wrapper">
-      <div>
-        {% include 'shared/sidebar.html' %}
-      </div>
-      <div style="display: flex;">
+        <!-- Sidebar -->
         <div>
-          <canvas id="myPieChart" width="400" height="400"></canvas>
+            {% include 'shared/sidebar.html' %}
         </div>
-        <div>
-          <canvas id="myBarChart" width="400" height="400"></canvas>
+
+        <!--Main layout-->
+        <div style="margin-left: 125px;"></div>
+  <main class="pt-5 mx-lg-5" style="margin-left: 200px; width: calc(100% - 250px);position: relative;">
+
+    <h1 style="margin-left: 600px;font-size:30px ;">Admin Dashboard</h1>
+
+    <div class="container-fluid mt-5" style="margin-left: 80px;">
+
+      <!--Grid row-->
+      <div class="row wow fadeIn">
+
+        <!--Grid column-->
+        <div class="col-md-9 mb-4">
+
+          <!--Card-->
+          <div class="card">
+
+            <!--Card content-->
+            <div class="card-body">
+
+              <canvas id="myBarChart"></canvas>
+
+            </div>
+
+          </div>
+          <!--/.Card-->
+
         </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-3 mb-4">
+
+          <!--Card-->
+          <div class="card mb-4">
+
+            <!-- Card header -->
+            <div class="card-header text-center">
+              Hotel Ratings Pie chart
+            </div>
+
+            <!--Card content-->
+            <div class="card-body">
+
+              <canvas id="hotelRatingChart"></canvas>
+
+            </div>
+
+          </div>
+          <!--/.Card-->
+
+          <!--Card-->
+          <div class="card mb-4">
+
+            <!--Card content-->
+            <div class="card-body">
+
+              <!-- List group links -->
+              <div class="list-group list-group-flush">
+
+                <a href="{% url 'hotel_view' %}" class="list-group-item list-group-item-action waves-effect"> <i class="lni lni-apartment"></i><span style="margin-left: 5px;">Hotels</span>
+                </a>
+
+                <a href="{% url 'activity_view' %}" class="list-group-item list-group-item-action waves-effect"><i class="lni lni-bi-cycle"></i><span style="margin-left: 5px;">Activities</span>
+                </a>
+              </div>
+              <!-- List group links -->
+
+            </div>
+
+          </div>
+          <!--/.Card-->
+
+        </div>
+        <!--Grid column-->
+
       </div>
+      <!--Grid row-->
+
+     
+
+    
+      </div>
+      <!--Grid row-->
+
+      <!--Grid row-->
+      <div class="row wow fadeIn" style="margin-left: 80px;">
+
+        <!--Grid column-->
+        <div class="col-lg-6 col-md-6 mb-4">
+
+          <!--Card-->
+          <div class="card" style="width: 618px; height: 430px;">
+
+            <!-- Card header -->
+            <div class="card-header text-center">Activity Average Rating by Type</div>
+
+            <!--Card content-->
+            <div style="width: 600px; height: 400px;">
+                <canvas id="lineChart"></canvas>
+            </div>
+
+          </div>
+          <!--/.Card-->
+
+        </div>
+        <!--Grid column-->
+
+        
+
+        <!--Grid column-->
+        <div class="col-lg-6 col-md-6 mb-4">
+
+          <!--Card-->
+          <div class="card" style="width: 618px; height: 430px; margin-left: 30px;">
+
+            <!-- Card header -->
+            <div class="card-header text-center">Activity Ratings Doughnut Chart</div>
+
+            <!--Card content-->
+            <div class="card-body">
+
+                <div style="width: 350px; height: 350px; margin-left: 130px;">
+                    <canvas id="doughnutChart"></canvas>
+                  </div>
+
+            </div>
+
+          </div>
+          <!--/.Card-->
+
+        </div>
+        <!--Grid column-->
+
+
+  </main>
+  <!--Main layout-->
     </div>
 
-    <script>
-      var ctxPie = document.getElementById('myPieChart').getContext('2d');
-      var myPieChart = new Chart(ctxPie, {
-          type: 'pie',
-          data: {
-              labels: ['Red', 'Blue', 'Yellow'],
-              datasets: [{
-                  label: 'My First Dataset',
-                  data: [300, 50, 100],
-                  backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)']
-              }]
-          },
-          options: {
-              responsive: true,
-              plugins: {
-                  legend: {
-                      position: 'top',
-                  },
-                  tooltip: {
-                      mode: 'index',
-                      intersect: false,
-                  },
-              }
-          }
-      });
 
-      var ctxBar = document.getElementById('myBarChart').getContext('2d');
-      var myBarChart = new Chart(ctxBar, {
-          type: 'bar',
-          data: {
-              labels: ['January', 'February', 'March', 'April'],
-              datasets: [{
-                  label: 'Number of Items Sold',
-                  data: [50, 60, 70, 80],
-                  backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)'
-                  ],
-                  borderColor: [
-                      'rgba(255,99,132,1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)'
-                  ],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              scales: {
-                  y: {
-                      beginAtZero: true
-                  }
-              }
-          }
-      });
+    <script>
+        // Bargraph for User Distribution
+        // Initialize the Bar Chart for User Distribution
+        var ctxBar = document.getElementById('myBarChart').getContext('2d');
+        var myBarChart = new Chart(ctxBar, {
+            type: 'bar', // Chart type
+            data: {
+                labels: {{ labels|safe }}, // Data labels from the template context
+                datasets: [{
+                    label: 'User Distribution',
+                    data: {{ data|safe }}, // Data values from the template context
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Bar color
+                    borderColor: 'rgba(75, 192, 192, 1)', // Border color
+                    borderWidth: 1 // Border width
+                }]
+            },
+            options: {
+                responsive: true, // Make the chart responsive
+                scales: {
+                    y: {
+                        beginAtZero: true // Start the y-axis at zero
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top', // Position of the legend
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                }
+            }
+        });
+
+        // Piechart for Hotel Ratings
+        // Pie chart for Hotel Ratings
+        document.addEventListener("DOMContentLoaded", function() {
+    var ctx = document.getElementById('hotelRatingChart').getContext('2d');
+    var hotelRatingChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: {{ ratings|safe }},
+            datasets: [{
+                data: {{ hotel_counts|safe }},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',  // Red
+                    'rgba(54, 162, 235, 0.2)',  // Blue
+                    'rgba(255, 206, 86, 0.2)',  // Yellow
+                    'rgba(75, 192, 192, 0.2)',  // Green
+                    'rgba(153, 102, 255, 0.2)', // Purple
+                    'rgba(255, 159, 64, 0.2)',  // Orange
+                    'rgba(255, 99, 71, 0.2)',   // Tomato
+                    'rgba(100, 149, 237, 0.2)', // Cornflower Blue
+                    'rgba(60, 179, 113, 0.2)',  // Medium Sea Green
+                    'rgba(123, 104, 238, 0.2)', // Medium Slate Blue
+                    'rgba(220, 20, 60, 0.2)'    // Crimson
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',    // Red
+                    'rgba(54, 162, 235, 1)',    // Blue
+                    'rgba(255, 206, 86, 1)',    // Yellow
+                    'rgba(75, 192, 192, 1)',    // Green
+                    'rgba(153, 102, 255, 1)',   // Purple
+                    'rgba(255, 159, 64, 1)',    // Orange
+                    'rgba(255, 99, 71, 1)',     // Tomato
+                    'rgba(100, 149, 237, 1)',   // Cornflower Blue
+                    'rgba(60, 179, 113, 1)',    // Medium Sea Green
+                    'rgba(123, 104, 238, 1)',   // Medium Slate Blue
+                    'rgba(220, 20, 60, 1)'      // Crimson
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.raw !== null) {
+                                label += context.raw;
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+
+// Doughnut chart for Activity Ratings
+document.addEventListener("DOMContentLoaded", function() {
+            var ctxDoughnut = document.getElementById('doughnutChart').getContext('2d');
+            var doughnutChart = new Chart(ctxDoughnut, {
+                type: 'doughnut',
+                data: {
+                    labels: {{ activity_labels|safe }},
+                    datasets: [{
+                        data: {{ activity_counts|safe }},
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)', // Red
+                            'rgba(54, 162, 235, 0.2)', // Blue
+                            'rgba(255, 206, 86, 0.2)', // Yellow
+                            'rgba(75, 192, 192, 0.2)', // Green
+                            'rgba(153, 102, 255, 0.2)', // Purple
+                            'rgba(255, 159, 64, 0.2)', // Orange
+                            'rgba(100, 149, 237, 0.2)', // Cornflower Blue
+                            'rgba(60, 179, 113, 0.2)', // Medium Sea Green
+                            'rgba(123, 104, 238, 0.2)', // Medium Slate Blue
+                            'rgba(220, 20, 60, 0.2)' // Crimson
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)', // Red
+                            'rgba(54, 162, 235, 1)', // Blue
+                            'rgba(255, 206, 86, 1)', // Yellow
+                            'rgba(75, 192, 192, 1)', // Green
+                            'rgba(153, 102, 255, 1)', // Purple
+                            'rgba(255, 159, 64, 1)', // Orange
+                            'rgba(100, 149, 237, 1)', // Cornflower Blue
+                            'rgba(60, 179, 113, 1)', // Medium Sea Green
+                            'rgba(123, 104, 238, 1)', // Medium Slate Blue
+                            'rgba(220, 20, 60, 1)' // Crimson
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.raw !== null) {
+                                        label += context.raw;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            // Line Chart for Activity Average Rating by Type
+            var ctx = document.getElementById('lineChart').getContext('2d');
+            var lineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: {{ activity_types|safe }},
+                    datasets: [{
+                        label: 'Average Rating',
+                        data: {{ avg_ratings|safe }},
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>

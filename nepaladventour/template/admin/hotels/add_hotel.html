@@ -10,82 +10,99 @@
 <body>
 
 <div class="container">
-  <div class="title">Register Hotel</div>
-  <div class="content">
-    <form class="registration-form" action="{% url 'add_hotel' %}" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class="user-details">
+    <div class="title">Register Hotel</div>
+    <div class="content">
+        <!-- Form for adding a new hotel -->
+        <form class="registration-form" action="{% url 'add_hotel' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="user-details">
+                
+                <!-- Hotel Name Input -->
+                <div class="input-box">
+                    <span class="details">Hotel Name</span>
+                    <input type="text" name="name" placeholder="Enter hotel name" required>
+                </div>
 
-        <div class="input-box">
-          <span class="details">Hotel Name</span>
-          <input type="text" name="name" placeholder="Enter hotel name" required>
-        </div>
+                <!-- Type of Hotel Input -->
+                <div class="input-box">
+                    <span class="details">Type of Hotel</span>
+                    <input type="text" name="type_of_hotel" placeholder="Enter type of hotel" required>
+                </div>
 
-        <div class="input-box">
-          <span class="details">Type of Hotel</span>
-          <input type="text" name="type_of_hotel" placeholder="Enter type of hotel" required>
-        </div>
+                <!-- Price Input -->
+                <div class="input-box">
+                    <span class="details">Price</span>
+                    <input type="number" step="0.01" name="price" placeholder="Enter price" required>
+                </div>
 
-        <div class="input-box">
-          <span class="details">Price</span>
-          <input type="number" step="0.01" name="price" placeholder="Enter price" required>
-        </div>
+                <!-- Budget Input -->
+                <div class="input-box">
+                    <span class="details">Budget</span>
+                    <input type="number" step="0.01" name="budget" placeholder="Enter budget" required>
+                </div>
 
-        <div class="input-box">
-          <span class="details">Budget</span>
-          <input type="number" step="0.01" name="budget" placeholder="Enter budget" required>
-        </div>
+                <!-- Address Input -->
+                <div class="input-box">
+                    <span class="details">Address</span>
+                    <input type="text" name="address" placeholder="Enter address" required>
+                </div>
 
-        <div class="input-box">
-          <span class="details">Address</span>
-          <input type="text" name="address" placeholder="Enter address" required>
-        </div>
+                <!-- City Input -->
+                <div class="input-box">
+                    <span class="details">City</span>
+                    <input type="text" name="city" placeholder="Enter city" required>
+                </div>
 
-        <div class="input-box">
-          <span class="details">City</span>
-          <input type="text" name="city" placeholder="Enter city" required>
-        </div>
+                <!-- Rating Input -->
+                <div class="input-box">
+                    <span class="details">Rating</span>
+                    <input type="text" name="rating" placeholder="Enter rating" required>
+                </div>
 
-        <div class="input-box">
-          <span class="details">Rating</span>
-          <input type="text" name="rating" placeholder="Enter rating" required>
-        </div>
+                <!-- Longitude Input -->
+                <div class="input-box">
+                    <span class="details">Longitude</span>
+                    <input type="text" name="longitude" placeholder="Enter longitude" required>
+                </div>
 
-        <div class="input-box">
-          <span class="details">Longitude</span>
-          <input type="text" name="longitude" placeholder="Enter longitude" required>
-        </div>
+                <!-- Latitude Input -->
+                <div class="input-box">
+                    <span class="details">Latitude</span>
+                    <input type="text" name="latitude" placeholder="Enter latitude" required>
+                </div>
 
-        <div class="input-box">
-          <span class="details">Latitude</span>
-          <input type="text" name="latitude" placeholder="Enter latitude" required>
-        </div>
+                <!-- Contact Input -->
+                <div class="input-box">
+                    <span class="details">Contact</span>
+                    <input type="text" name="contact" placeholder="Enter contact number" required>
+                </div>
 
-        <div class="input-box">
-          <span class="details">Contact</span>
-          <input type="text" name="contact" placeholder="Enter contact number" required>
-        </div>
+                <!-- Description Input -->
+                <div class="input-box">
+                    <span class="details">Description</span>
+                    <textarea name="description" placeholder="Enter description" required></textarea>
+                </div>
 
-        <div class="input-box">
-          <span class="details">Description</span>
-          <textarea name="description" placeholder="Enter description" required></textarea>
-        </div>
+                <!-- Main Hotel Picture Input -->
+                <div class="input-box file">
+                    <span class="details">Main Hotel Picture</span>
+                    <input type="file" name="picture" accept="image/*" required>
+                </div>
 
-        <div class="input-box file">
-          <span class="details">Main Hotel Picture</span>
-          <input type="file" name="picture" accept="image/*" required>
-      </div>
-  
-      <div class="input-box file">
-          <span class="details">Additional Hotel Pictures</span>
-          <input type="file" name="images" accept="image/*" multiple required>
-      </div>
+                <!-- Additional Hotel Pictures Input -->
+                <div class="input-box file">
+                    <span class="details">Additional Hotel Pictures</span>
+                    <input type="file" name="images" accept="image/*" multiple required>
+                </div>
 
-      <div class="button">
-        <input type="submit" value="Add Hotel">
-      </div>
-    </form>
-  </div>
+            </div>
+        
+            <!-- Submit Button -->
+            <div class="button">
+                <input type="submit" value="Add Hotel">
+            </div>
+        </form>
+    </div>
 </div>
 
 </body>

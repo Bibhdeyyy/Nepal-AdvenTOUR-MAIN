@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-{%load static%}
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin|Activities</title>
+    <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css">
+    <!-- Include Font Awesome CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <!-- Additional custom CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'css/admins.css' %}">
     <style>
+        /* Custom styles for buttons */
         .custom-light-green {
             background-color: #38ce38 !important; /* Example of a lighter green color */
             border-color: #38ce38 !important; /* Adjust border color to match */
@@ -23,93 +27,106 @@
 </head>
 <body>
     <div class="wrapper">
-      <div>
-        {% include 'shared/sidebar.html' %}  
+        <!-- Include sidebar -->
+        <div>
+            {% include 'shared/sidebar.html' %}
         </div>
-        <div class="container mt-4">            
-          <h2 style="margin-left: 550px;">Acitivities</h2>
-          
-          <div class="d-flex justify-content-end">
-          <a href="{% url 'add_activity' %}" class="btn btn-success custom-light-green">
-            <i class="fas fa-plus"></i> Add New Activity
-          </a>
-        </div>
+        <div class="container mt-4">
+            <!-- Page title -->
+            <h2 style="margin-left: 550px;">Acitivities</h2>
+            
+            <!-- Button to add a new activity -->
+            <div class="d-flex justify-content-end">
+                <a href="{% url 'add_activity' %}" class="btn btn-success custom-light-green">
+                    <i class="fas fa-plus"></i> Add New Activity
+                </a>
+            </div>
 
-          <table class="table table-striped">
-              <thead>
-                  <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Age_Required</th>
-                      <th>Price</th>
-                      <th>Address</th>
-                      <th>City</th>
-                      <th>Contact</th>
-                      <th>Status</th>
-                      <th>Picture</th>
-                      <th>Action</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% for activity in activities %}
-                  <tr>
-                      <td>{{ activity.id }}</td>
-                      <td>{{ activity.name }}</td>
-                      <td>{{ activity.age_required }}</td>
-                      <td>{{ activity.price }}</td>
-                      <td>{{ activity.address }}</td>
-                      <td>{{ activity.city }}</td>
-                      <td>{{ activity.contact }}</td>
-                      <td>{{ activity.status }}</td>
-                      <td>
-                        {% if activity.picture %}
-                        <img src="{{ activity.picture.url }}" alt="Activity Image" style="width: 100px; height: auto;">
-                        {% endif %}
-                    </td>                     
-                      <td>
-                        <div class="action-buttons">
-                            <a href="{% url 'edit_activity' activity.id %}" class="btn btn-warning btn-sm edit-btn">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>
-                            <a href="{% url 'delete_activity' activity.id %}" class="btn btn-danger btn-sm">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        </div>
-                    </td>
-                  </tr>
-                  {% endfor %}
-              </tbody>
-          </table>
-          <div class="pagination">
-            <span class="step-links">
-                {% if activities.has_previous %}
-                    <a href="?page={{ activities.previous_page_number }}" class="btn btn-primary btn-sm">Previous</a>
-                {% endif %}
-                
-                <span class="current">
-                    Page {{ activities.number }} of {{ activities.paginator.num_pages }}.
+            <!-- Table to display activities -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age_Required</th>
+                        <th>Price</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>Contact</th>
+                        <th>Status</th>
+                        <th>Picture</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for activity in activities %}
+                    <tr>
+                        <td>{{ activity.id }}</td>
+                        <td>{{ activity.name }}</td>
+                        <td>{{ activity.age_required }}</td>
+                        <td>{{ activity.price }}</td>
+                        <td>{{ activity.address }}</td>
+                        <td>{{ activity.city }}</td>
+                        <td>{{ activity.contact }}</td>
+                        <td>{{ activity.status }}</td>
+                        <td>
+                            <!-- Display activity picture if available -->
+                            {% if activity.picture %}
+                            <img src="{{ activity.picture.url }}" alt="Activity Image" style="width: 100px; height: auto;">
+                            {% endif %}
+                        </td>
+                        <td>
+                            <!-- Buttons for editing and deleting activities -->
+                            <div class="action-buttons">
+                                <a href="{% url 'edit_activity' activity.id %}" class="btn btn-warning btn-sm edit-btn">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a href="{% url 'delete_activity' activity.id %}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <!-- Pagination links -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if activities.has_previous %}
+                        <a href="?page={{ activities.previous_page_number }}" class="btn btn-primary btn-sm">Previous</a>
+                    {% endif %}
+                    
+                    <span class="current">
+                        Page {{ activities.number }} of {{ activities.paginator.num_pages }}.
+                    </span>
+
+                    {% if activities.has_next %}
+                        <a href="?page={{ activities.next_page_number }}" class="btn btn-primary btn-sm">Next</a>
+                    {% endif %}
                 </span>
-
-                {% if activities.has_next %}
-                    <a href="?page={{ activities.next_page_number }}" class="btn btn-primary btn-sm">Next</a>
-                {% endif %}
-            </span>
-        </div>
-        {% if messages %}
-        <div class="container" style="margin-top: 10px;">
-        {% for message in messages %}
-        <div class="custom-alert alert-{{ message.tags }} alert-dismissible" role="alert">
-            {{ message }}
-            <button type="button" class="close-button" aria-label="Close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {% endfor %}
-        </div>
-        {% endif %} 
+            </div>
+            
+            <!-- Display messages if any -->
+            {% if messages %}
+            <div class="container" style="margin-top: 10px;">
+                {% for message in messages %}
+                <div class="custom-alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                    {{ message }}
+                    <button type="button" class="close-button" aria-label="Close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %} 
         </div>      
-  </div>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script type="text/javascript" src="{% static 'js/admins.js' %}"></script>
+    </div>
+    
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include custom JavaScript -->
+    <script type="text/javascript" src="{% static 'js/admins.js' %}"></script>
 </body>
 </html>

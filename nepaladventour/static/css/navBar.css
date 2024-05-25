@@ -294,7 +294,7 @@ nav .navbar .links li:hover .js-sub-menu {
 }
 .navbar {
   height: 70px;
-  background: black; /* was repeated, ensure it's necessary */
-  padding: 0 50px; /* Check if this padding doesn't conflict with footer */
-  transition: all 0.5s; /* This should not affect the footer */
+  background: black; 
+  padding: 0 50px; 
+  transition: all 0.5s; 
 }

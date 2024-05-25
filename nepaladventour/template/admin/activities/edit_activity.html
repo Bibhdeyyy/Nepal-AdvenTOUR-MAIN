@@ -4,69 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Activity</title>
+    <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container mt-5">
+    <!-- Title -->
     <h2>Edit Activity</h2>
+    <!-- Form for editing activity -->
     <form action="{% url 'edit_activity' activity.id %}" method="post" enctype="multipart/form-data" class="mt-3">
         {% csrf_token %}
+        <!-- Hidden input field to store activity ID -->
         <input type="hidden" name="activity_id" value="{{ activity.id }}">
         
+        <!-- Input field for activity name -->
         <div class="form-group">
             <label for="name">Activity Name:</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ activity.name }}" required>
         </div>
 
+        <!-- Input field for minimum age required -->
         <div class="form-group">
             <label for="age_required">Age Required:</label>
             <input type="number" class="form-control" id="age_required" name="age_required" value="{{ activity.age_required }}" required>
         </div>
 
+        <!-- Input field for activity price -->
         <div class="form-group">
             <label for="price">Price:</label>
             <input type="text" class="form-control" id="price" name="price" value="{{ activity.price }}" required>
         </div>
 
+        <!-- Input field for activity address -->
         <div class="form-group">
             <label for="address">Address:</label>
             <input type="text" class="form-control" id="address" name="address" value="{{ activity.address }}" required>
         </div>
 
+        <!-- Input field for city -->
         <div class="form-group">
             <label for="city">City:</label>
             <input type="text" class="form-control" id="city" name="city" value="{{ activity.city }}" required>
         </div>
 
+        <!-- Input field for contact number -->
         <div class="form-group">
             <label for="contact">Contact:</label>
             <input type="text" class="form-control" id="contact" name="contact" value="{{ activity.contact }}" required>
         </div>
 
+        <!-- Input field for activity status -->
         <div class="form-group">
             <label for="status">Status:</label>
             <input type="text" class="form-control" id="status" name="status" value="{{ activity.status }}" required>
         </div>
 
+        <!-- Input field for main activity picture -->
         <div class="form-group">
             <label for="picture">Main Activity Picture:</label>
             <div class="custom-file">
                 <input type="file" class="custom-file-input" id="picture" name="picture">
                 <label class="custom-file-label" for="picture">Choose file</label>
             </div>
+            <!-- Display current picture if available -->
             {% if activity.picture %}
                 <img src="{{ activity.picture.url }}" alt="Activity Main Image" class="img-fluid mt-2" style="max-height: 200px;">
             {% endif %}
         </div>
 
+        <!-- Submit button -->
         <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
 </div>
 
+<!-- Include jQuery and bs-custom-file-input -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
 <script>
     $(document).ready(function () {
+        // Initialize bs-custom-file-input
         bsCustomFileInput.init()
     });
 </script>

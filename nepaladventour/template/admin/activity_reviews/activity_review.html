@@ -1,16 +1,20 @@
 <!DOCTYPE html>
-{%load static%}
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin|Activity Reviews</title>
+    <title>Admin | Activity Reviews</title>
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- Additional Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/admins.css' %}">
     <style>
+        /* Custom styling for buttons */
         .custom-light-green {
             background-color: #38ce38 !important; /* Example of a lighter green color */
             border-color: #38ce38 !important; /* Adjust border color to match */
@@ -22,76 +26,81 @@
     </style>
 </head>
 <body>
+    <!-- Sidebar -->
     <div class="wrapper">
-      <div>
-        {% include 'shared/sidebar.html' %}  
+        <div>
+            {% include 'shared/sidebar.html' %}
         </div>
+        <!-- Main content container -->
         <div class="container mt-4">            
-          <h2 style="margin-left: 550px;">Activity Reviews</h2>
+            <!-- Title -->
+            <h2 style="margin-left: 550px;">Activity Reviews</h2>
+            <!-- Table for displaying activity reviews -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Rating</th>
+                        <th>Activity</th>
+                        <th>User</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for activity_review in activity_reviews %}
+                    <tr>
+                        <td>{{ activity_review.id }}</td>
+                        <td>{{ activity_review.rating }}</td>
+                        <td>{{ activity_review.activity.name }}</td>
+                        <td>{{ activity_review.user.username }}</td>
+                        <td>{{ activity_review.description }}</td>                     
+                        <td>
+                            <!-- Delete button for activity review -->
+                            <div class="action-buttons">
+                                <a href="{% url 'delete_activity_review' activity_review.id %}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- Pagination links -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if activity_reviews.has_previous %}
+                        <a href="?page={{ activity_reviews.previous_page_number }}" class="btn btn-primary btn-sm">Previous</a>
+                    {% endif %}
+                    
+                    <span class="current">
+                        Page {{ activity_reviews.number }} of {{ activity_reviews.paginator.num_pages }}.
+                    </span>
 
-          <table class="table table-striped">
-              <thead>
-                  <tr>
-                      <th>ID</th>
-                      <th>Rating</th>
-                      <th>Activity</th>
-                      <th>User</th>
-                      <th>Description</th>
-                      <th>Action</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% for activity_review in activity_reviews %}
-                  <tr>
-                      <td>{{ activity_review.id }}</td>
-                      <td>{{ activity_review.rating }}</td>
-                      <td>{{ activity_review.activity.name }}</td>
-                      <td>{{ activity_review.user.username }}</td>
-                      <td>{{ activity_review.description }}</td>                     
-                      <td>
-                        <div class="action-buttons">
-                            <a href="{% url 'delete_activity_review' activity_review.id %}" class="btn btn-danger btn-sm">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        </div>
-                    </td>
-                  </tr>
-                  {% endfor %}
-              </tbody>
-          </table>
-          <div class="pagination">
-            <span class="step-links">
-                {% if activity_reviews.has_previous %}
-                    <a href="?page={{ activity_reviews.previous_page_number }}" class="btn btn-primary btn-sm">Previous</a>
-                {% endif %}
-                
-                <span class="current">
-                    Page {{ activity_reviews.number }} of {{ activity_reviews.paginator.num_pages }}.
+                    {% if activity_reviews.has_next %}
+                        <a href="?page={{ activity_reviews.next_page_number }}" class="btn btn-primary btn-sm">Next</a>
+                    {% endif %}
                 </span>
-
-                {% if activity_reviews.has_next %}
-                    <a href="?page={{ activity_reviews.next_page_number }}" class="btn btn-primary btn-sm">Next</a>
-                {% endif %}
-            </span>
-        </div>
-        
-        {% if messages %}
-        <div class="container" style="margin-top: 10px;">
-        {% for message in messages %}
-        <div class="custom-alert alert-{{ message.tags }} alert-dismissible" role="alert">
-            {{ message }}
-            <button type="button" class="close-button" aria-label="Close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {% endfor %}
-        </div>
-        {% endif %}
-
+            </div>
+            <!-- Display messages if any -->
+            {% if messages %}
+            <div class="container" style="margin-top: 10px;">
+                {% for message in messages %}
+                <div class="custom-alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                    {{ message }}
+                    <button type="button" class="close-button" aria-label="Close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div> 
-        
-  </div>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script type="text/javascript" src="{% static 'js/admins.js' %}"></script>
+    </div>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script type="text/javascript" src="{% static 'js/admins.js' %}"></script>
 </body>
 </html>

@@ -15,7 +15,10 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.http import HttpResponseNotAllowed
 from django.db.models import Avg
-from geopy.distance import geodesic
+from django.db.models import Count
+from datetime import timedelta
+from django.utils.timezone import now
+from datetime import date
 
 # Home Page
 def home(request):
@@ -27,35 +30,6 @@ def home(request):
             return render(request, "userss/home.html", {'top_hotels': top_hotels})
     else:
         return redirect('/signin')
-    
-
-def get_hotels_nearby(request):
-    if not request.user.is_authenticated:
-        return JsonResponse({'error': 'User not authenticated'}, status=401)
-    
-    latitude = float(request.GET.get('lat', 0))
-    longitude = float(request.GET.get('lon', 0))
-    user_location = (latitude, longitude)
-    nearby_hotels = []
-
-    # Assuming there is a way to determine user's city from their profile
-    user_city = request.user.profile.city  # Ensure your user model has a profile with a city field
-
-    if latitude and longitude:
-        # Filter hotels based on the city from the user's profile
-        all_hotels = Hotel.objects.filter(city=user_city)
-        for hotel in all_hotels:
-            hotel_location = (hotel.latitude, hotel.longitude)
-            if geodesic(user_location, hotel_location).km <= 10:  # Assuming you want to show hotels within 10 km
-                nearby_hotels.append({
-                    'name': hotel.name,
-                    'type_of_hotel': hotel.type_of_hotel,
-                    'price': float(hotel.price),
-                    'picture_url': hotel.picture if hotel.picture else "Default_Image_URL"
-                })
-
-    return JsonResponse({'hotels': nearby_hotels})
-
 
 
 @login_required
@@ -165,15 +139,45 @@ def signup(request):
 
 
 # Admin Dashboard
-
 def admin_dashboard(request):
     if request.user.is_authenticated:
-        # Example data retrieval -- replace with actual data source logic
-        data = [300, 50, 100]  # This would come from your database or API
-        labels = ["Red", "Blue", "Yellow"]
-        return render(request, "admin/admin_dashboard.html", {'data': data, 'labels': labels})
+        # Count the number of admins and users
+        admin_count = profile.objects.filter(is_staff=True).count()
+        user_count = profile.objects.filter(is_staff=False).count()
+
+        # Count the number of hotels with each rating
+        hotel_ratings = Hotel.objects.values('rating').annotate(count=Count('rating')).order_by('rating')
+        ratings = [str(hotel['rating']) for hotel in hotel_ratings]  # Convert ratings to string for JSON compatibility
+        hotel_counts = [hotel['count'] for hotel in hotel_ratings]
+
+        # Count the number of activities with each rating
+        activity_ratings = Activity.objects.values('rating').annotate(count=Count('rating')).order_by('rating')
+        activity_labels = [str(activity['rating']) for activity in activity_ratings]  # Convert ratings to string for JSON compatibility
+        activity_counts = [activity['count'] for activity in activity_ratings]
+
+        # Get the average rating of activities by type
+        activity_data = Activity.objects.values('type').annotate(avg_rating=Avg('rating')).order_by('type')
+        activity_types = [activity['type'] for activity in activity_data]
+        avg_ratings = [float(activity['avg_rating']) for activity in activity_data]
+
+        # Data for the Bar Chart
+        data = [admin_count, user_count]
+        labels = ["Admins", "Users"]
+
+        context = {
+            'data': data,
+            'labels': labels,
+            'ratings': ratings,
+            'hotel_counts': hotel_counts,
+            'activity_labels': activity_labels,
+            'activity_counts': activity_counts,
+            'activity_types': json.dumps(activity_types),
+            'avg_ratings': json.dumps(avg_ratings),
+        }
+
+        return render(request, "admin/admin_dashboard.html", context)
     else:
-        return render(request, "users/login.html")
+        return render(request, "userss/login.html")
 
 
 #Admins
@@ -544,6 +548,15 @@ def delete_activity_review(request, id):
 def activity_details(request, id):
     activity = get_object_or_404(Activity, pk=id)
     return render(request, 'userss/activity_details_page.html', {'activity':activity})
+
+def activity_details(request, id):
+    activity = get_object_or_404(Activity, pk=id)
+    context = {
+        'activity': activity,
+        'latitude': activity.latitude,
+        'longitude': activity.longitude
+    }
+    return render(request, 'userss/activity_details_page.html', context)
 
 # Navbar
 def navBar(request):

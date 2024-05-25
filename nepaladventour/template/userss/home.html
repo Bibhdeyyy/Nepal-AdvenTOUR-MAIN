@@ -63,6 +63,7 @@
             </button>
           </div>
     </section>
+    <!-- Slider Ends -->
 
 
     <!-- Popular Destinations -->
@@ -70,12 +71,12 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <span class="subtitle">
+                    <span class="subtitle hidden delay-1">
                         Top Destination
                     </span>
-                    <h2 class="py-2 mb-3" >World's Popular Destination</h2>
+                    <h2 class="py-2 mb-3 hidden delay-2" >World's Popular Destination</h2>
                 </div>
-                <div class="col-lg-3 mb-5">
+                <div class="col-lg-3 mb-5 hidden delay-3">
                     <div class="destination">
                         <div class="destination-image">
                             <a href="https://www.britannica.com/place/Mount-Everest" target="_blank"><img src="{% static 'images/home/nepal.jpg' %}" alt=""></a>  
@@ -86,7 +87,7 @@
                         </div>
                     </div> 
                 </div>
-                <div class="col-lg-3 mb-5">
+                <div class="col-lg-3 mb-5 hidden delay-4">
                     <div class="destination">
                         <div class="destination-image">
                             <a href="https://www.drukasia.com/bhutan/paro/taktsang-monastery/" target="_blank"><img src="{% static 'images/home/bhutan.jpg' %}" alt=""></a>  
@@ -97,7 +98,7 @@
                         </div>
                     </div> 
                 </div>
-                <div class="col-lg-3 mb-5">
+                <div class="col-lg-3 mb-5 hidden delay-5">
                     <div class="destination">
                         <div class="destination-image">
                             <a href="https://www.himalayanwonders.com/content/peaks/mount-kailash.html?selocation=NP" target="_blank"><img src="{% static 'images/home/tibet.jpg' %}" alt=""></a>  
@@ -108,7 +109,7 @@
                         </div>
                     </div> 
                 </div>
-                <div class="col-lg-3 mb-5">
+                <div class="col-lg-3 mb-5 hidden delay-6">
                     <div class="destination">
                         <div class="destination-image">
                             <a href="https://whc.unesco.org/en/list/252/" target="_blank"><img src="{% static 'images/home/india.jpg' %}" alt=""></a>  
@@ -122,6 +123,7 @@
             </div>
         </div>
     </section>
+    <!-- Popular Destinations Ends -->
     
     <!-- Featured Hotels -->
     <section id="packages" class="py-5">
@@ -182,6 +184,7 @@
             </div>
         </div>
     </section>
+    <!-- Featured Hotels Ends -->
     
     
 
@@ -258,7 +261,9 @@
         </div>
     </section>
     <div class="white-line"></div>
+    <!-- Blogs Ends -->
 
+    <!-- Activity of the Month -->
     <section>
         <section id="featured" class="py-5">
             <div class="container py-5">
@@ -310,12 +315,13 @@
                                 <span class="ms-1">Memorable Himalayan Adventure Experience</span>
                             </li>
                         </ul>
-                        <a href="#" class="btn btn-outline-secondary border-0 w-100">Explore Package</a>
+                        <a href="{% url 'activities' %}" class="btn btn-outline-secondary border-0 w-100">Explore Activities</a>
                     </div>
                 </div>
             </div>
         </section>
     </section>
+    <!-- Activity of the Month Ends-->
 
     <button id="scroll-top-btn" type="button" onclick="scrollToTop()" class="visible">
         <i class="lni lni-arrow-up"></i>
