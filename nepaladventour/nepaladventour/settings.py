@@ -137,4 +137,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/accounts/login/'
 
 #Session Expire
+SESSION_COOKIE_AGE = 10 #10 seconds
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

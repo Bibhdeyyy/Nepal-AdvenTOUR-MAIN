@@ -1,47 +1,67 @@
 <!DOCTYPE html>
-{%load static%}
+{% load static %}
 <html>
 <head>
-<title>Search Hotels</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
-<link rel="stylesheet" type="text/css" href="{% static 'css/search_activity.css' %}">
+    <title>Search Activities</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/search_activity.css' %}">
 </head>
-
 <body>
-    {%include 'shared/navBar.html'%}
+    {% include 'shared/navBar.html' %}
     <div class="wrapper" style="background-image: url('tech.jpg');">
-    <div class="inner">
-    <div class="image-holder">
-    <img src="{% static 'images/search activity form/activity form.jpg' %}" alt="image" style="height: 500px;">
-    </div>
+        <div class="inner">
+            <div class="image-holder">
+                <img src="{% static 'images/search activity form/activity form.jpg' %}" alt="image" style="height: 500px;">
+            </div>
+            <form id="search-form" method="get">
+                <h3 style="color: black;">Search Activities</h3>
+                <br>
+                <!-- Choose Activity Dropdown -->
+                <div class="form-wrapper">
+                    <h2 style="color: black; padding-bottom: 15px;">Choose Activity:</h2>
+                    <select name="activity_type" id="activity" class="form-control">
+                        <option value="" disabled selected>Select an activity</option>
+                        {% for activity_type in activities %}
+                            <option value="{{ activity_type }}">{{ activity_type }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-    <form action="{% url 'activity_search_results' %}" method="get">
-        {% csrf_token %}
-        <h3 style="color: black;">Search Activities</h3>
-        <br>
-        <!-- Choose Activity Dropdown -->
-        <div class="form-wrapper">
-            <h2 style="color: black; padding-bottom: 15px;">Choose Activity:</h2>
-            <select name="activity_type" id="activity" class="form-control">
-                <option value="" disabled selected>Select an activity</option>
-                {% for activity_type in activities %}
-                    <option value="{{ activity_type }}">{{ activity_type }}</option>
-                {% endfor %}
-            </select>
+                <div class="form-wrapper">
+                    <h2 style="color: black; padding-bottom: 15px;">Set Range (in KM):</h2>
+                    <input type="range" name="range" id="range" min="0" max="500" value="500" class="form-control" oninput="rangeOutput.value=parseInt(range.value)">
+                    <output id="rangeOutput" style="color: black;">500</output> 
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-3">Search</button>
+            </form>
         </div>
-
-        <div class="form-wrapper">
-            <h2 style="color: black; padding-bottom: 15px;">Set Range (in KM):</h2>
-            <input type="range" name="price" id="price" min="0" max="500" value="500" class="form-control" oninput="priceOutput.value=parseInt(price.value)">
-            <output id="priceOutput" style="color: black;">500</output> 
-        </div>
-        
-
-        <button type="submit">Search</button>
-    </form>
-    
     </div>
-    </div>
+    <script>
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const activity = document.getElementById('activity').value;
+            const range = document.getElementById('range').value;
+
+            if (!activity) {
+                alert("Please select an activity");
+                return;
+            }
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+
+                    const queryString = `?activity_type=${activity}&range=${range}&latitude=${latitude}&longitude=${longitude}`;
+                    window.location.href = `{% url 'activity_search_results' %}${queryString}`;
+                }, () => {
+                    alert('Geolocation is not supported by this browser or permission denied.');
+                });
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        });
+    </script>
 </body>
 </html>

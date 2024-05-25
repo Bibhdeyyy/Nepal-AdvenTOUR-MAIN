@@ -1,3 +1,4 @@
+# Importing Libraries
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -19,6 +20,13 @@ from django.db.models import Count
 from datetime import timedelta
 from django.utils.timezone import now
 from datetime import date
+import pandas as pd
+import joblib
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics.pairwise import cosine_similarity
+from math import radians, sin, cos, sqrt, atan2
+
 
 # Home Page
 def home(request):
@@ -569,6 +577,7 @@ def footer(request):
 def about_us(request):
     return render(request, "userss/about_us.html")
 
+
 # Hotel Details Page
 def hotel_details(request, id):
     hotel = get_object_or_404(Hotel, pk=id)
@@ -643,12 +652,32 @@ def search_activity(request):
     })
 
 def activity_search_results(request):
-    activity_type = request.GET.get('activity_type', None)
-    
-    # Filter activities based on the selected name, show all if no type is specified
-    activities = Activity.objects.filter(type=activity_type) if activity_type else Activity.objects.all()
+    activity_type = request.GET.get('activity_type')
+    range_km = float(request.GET.get('range'))
+    latitude = float(request.GET.get('latitude'))
+    longitude = float(request.GET.get('longitude'))
 
-    return render(request, 'userss/activity_search_results.html', {'activities': activities})
+    activities = Activity.objects.filter(type=activity_type)
+    nearby_activities = []
+
+    for activity in activities:
+        activity_lat = activity.latitude
+        activity_lon = activity.longitude
+
+        distance = haversine_distance(latitude, longitude, activity_lat, activity_lon)
+        if distance <= range_km:
+            nearby_activities.append((activity, distance))
+
+    return render(request, 'userss/activity_search_results.html', {'activities': nearby_activities})
+
+def haversine_distance(lat1, lon1, lat2, lon2):
+    R = 6371  # Radius of the Earth in km
+    dlat = radians(lat2 - lat1)
+    dlon = radians(lon2 - lon1)
+    a = sin(dlat / 2) * sin(dlat / 2) + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2) * sin(dlon / 2)
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    distance = R * c
+    return distance
 
 
 #users

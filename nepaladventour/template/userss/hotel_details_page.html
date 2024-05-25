@@ -81,7 +81,10 @@
       
                   <dt class="col-3">City: </dt>
                   <dd class="col-9">{{hotel.city}}</dd>
-      
+
+                  <dt class="col-3">Distance:</dt>
+                  <dd class="col-9">{{ distance_from_user }} km</dd>
+   
                 </div>
       
                 <hr />
@@ -106,64 +109,27 @@
             
             <div class="col-lg-4">
               <div class="px-0 border rounded-2 shadow-0">
-                <div class="card">
-                  <div class="card-body" style="background-color: antiquewhite;">
-                    <h5 class="card-title">You may also like</h5>
-                    <div class="d-flex mb-3">
-                      <a href="#" class="me-3">
-                        <img src="{% static 'images/1.jpg' %}" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                      </a>
-                      <div class="info">
-                        <a href="#" class="nav-link mb-1">
-                          The Milestone Hotel & Spa<br />
-                          <strong style="color: rgb(66, 213, 66);">4.5</strong>
-                        </a>
-                        <strong class="text-dark"> Rs 3598.32</strong>
+                  <div class="card">
+                      <div class="card-body" style="background-color: antiquewhite;">
+                          <h5 class="card-title">You may also like</h5>
+                          {% for rec in recommendations %}
+                              <div class="d-flex mb-3">
+                                  <a href="#" class="me-3">
+                                      <img src="{% static 'images/'|add:rec.name|add:'.jpg' %}" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
+                                  </a>
+                                  <div class="info">
+                                      <a href="#" class="nav-link mb-1">
+                                          {{ rec.name }}<br />
+                                          <strong style="color: rgb(66, 213, 66);">{{ rec.rating }}</strong>
+                                      </a>
+                                      <strong class="text-dark"> Rs {{ rec.total_ratings }}</strong>
+                                  </div>
+                              </div>
+                          {% endfor %}
                       </div>
-                    </div>
-      
-                    <div class="d-flex mb-3">
-                      <a href="#" class="me-3">
-                        <img src="{% static 'images/2.jpg' %}" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                      </a>
-                      <div class="info">
-                        <a href="#" class="nav-link mb-1">
-                          Hotel Yala Peak<br />
-                          <strong style="color: rgb(66, 213, 66);">4.5</strong>
-                        </a>
-                        <strong class="text-dark"> Rs 1465.98</strong>
-                      </div>
-                    </div>
-      
-                    <div class="d-flex mb-3">
-                      <a href="#" class="me-3">
-                        <img src="{% static 'images/3.jpg' %}" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                      </a>
-                      <div class="info">
-                        <a href="#" class="nav-link mb-1">
-                          Satkar Hotel & Spa<br />
-                          <strong style="color: rgb(66, 213, 66);">5</strong>
-                        </a>
-                        <strong class="text-dark"> Rs 4931.03</strong>
-                      </div>
-                    </div>
-                    
-                    <div class="d-flex">
-                      <a href="#" class="me-3">
-                        <img src="{% static 'images/4.jpg' %}" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                      </a>
-                      <div class="info">
-                        <a href="#" class="nav-link mb-1">
-                          Potala Guest House <br/>
-                          <strong style="color: rgb(66, 213, 66);">4</strong> 
-                        </a>
-                        <strong class="text-dark"> Rs 2132.34</strong>
-                      </div>
-                    </div>
                   </div>
-                </div>
               </div>
-            </div>
+          </div>
           </div>
         </div>
       </section>
