@@ -23,6 +23,7 @@ class Hotel(models.Model):
     city = models.CharField(max_length=255, default='Default City')
     contact = models.CharField(max_length=255)
     description = models.TextField()
+    place_id = models.CharField(max_length=255, null=True, blank=True)
     latitude = models.FloatField(default=0.0)
     longitude = models.FloatField(default=0.0)
     #Main Picture of the Hotel
@@ -30,6 +31,8 @@ class Hotel(models.Model):
 
     def __str__(self):
         return self.name
+    
+    
 
 # Model for Hotel Image 
 class HotelImage(models.Model):

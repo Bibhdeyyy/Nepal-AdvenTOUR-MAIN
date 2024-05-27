@@ -18,9 +18,9 @@
                 <br>
                 <!-- Choose Activity Dropdown -->
                 <div class="form-wrapper">
-                    <h2 style="color: black; padding-bottom: 15px;">Choose Activity:</h2>
+                    <h2 style="color: black; padding-bottom: 15px;">Choose Activity (optional):</h2>
                     <select name="activity_type" id="activity" class="form-control">
-                        <option value="" disabled selected>Select an activity</option>
+                        <option value="" selected>Select an activity</option>
                         {% for activity_type in activities %}
                             <option value="{{ activity_type }}">{{ activity_type }}</option>
                         {% endfor %}
@@ -42,11 +42,6 @@
             event.preventDefault();
             const activity = document.getElementById('activity').value;
             const range = document.getElementById('range').value;
-
-            if (!activity) {
-                alert("Please select an activity");
-                return;
-            }
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {

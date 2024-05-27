@@ -1,11 +1,12 @@
 city,name,address,latitude,longitude,rating,total_ratings,place_id,phone_number
 Kathmandu,Nepal Pavilion Inn,"Amrit Marg, Thamel Post Box 6062, Kathmandu 44600, Nepal",27.7115291,85.3120634,4.2,209,ChIJeUwGJHIZ6zkReIMr3o1MB_M,01-5320383
 Kathmandu,Hotel Shanker Kathmandu,"Kathmandu 44600, Nepal",27.7188945,85.3194684,4.3,2904,ChIJw3uqaBsZ6zkRjS-DDyXqWyk,01-4510151
-Kathmandu,Hotel Nepalaya,"Maitripura Mahavihara, Thamel Marg, Kathmandu 21292, Nepal",27.7119823,85.3113493,4.4,1093,ChIJIS1HLPwY6zkRfpeS9we8v-k,01-5369141
+Kathmandu,Hotel Nepalaya Kathmandu,"Maitripura Mahavihara, Thamel Marg, Kathmandu 21292, Nepal",27.7119823,85.3113493,4.4,1093,ChIJIS1HLPwY6zkRfpeS9we8v-k,01-5369141
 Kathmandu,Royal Empire Boutique Hotel,"Kathmandu 44600, Nepal",27.722913,85.3286,4.2,656,ChIJ0SM5UhEZ6zkRjWY16XUeu2E,01-4000542
 Kathmandu,Ramada Encore by Wyndham Kathmandu Thamel,"P885+GFG, Z Street 1, Kathmandu 44600, Nepal",27.71673,85.3092168,4.4,644,ChIJn8E2t5AZ6zkRMn-jYUOMKbY,01-4700404
 Kathmandu,"Hotel Manaslu, Deluxe Heritage & Boutique Hotel 4 star","P89C+Q73, Manaslu Rd, Kathmandu 44600, Nepal",27.7199079,85.3209944,4.1,857,ChIJs2DWHBsZ6zkR00mkiA0TgaI,01-4510071
 Kathmandu,Hotel BUBO Himalaya Pvt. Ltd.,"Narsingh Chowk Marg, Kathmandu 44600, Nepal",27.7141176,85.3111618,4,92,ChIJw0uaAf0Y6zkRTFiZ4Mmrx4I,01-4255622
+Kathmandu,Hotel Soaltee,Tahachal Marg,27.7006,85.291,4.5,399,ChIJw0uaAf0Y6zkRTFiZ4Mmrx4I, 01-4273999
 Kathmandu,Hyatt Regency Kathmandu,"Taragaon, Kathmandu 44601, Nepal",27.7220792,85.3569394,4.5,4972,ChIJY859itgb6zkRtWuB2jZ6di8,01-5171234
 Kathmandu,Hotel Yala Peak,"Thamel Marg, Kathmandu 44600, Nepal",27.7124334,85.3114208,4.6,382,ChIJaw-Ryf0Y6zkRd15NvINjQQU,01-5358996
 Kathmandu,OYO 123 Hotel Prince Plaza,"Hotel Prince Plaza, Kathmandu 44600, Nepal",27.7112133,85.333678,3.7,443,ChIJwQKFUAsZ6zkRbPKLnjjmS_w,Not available

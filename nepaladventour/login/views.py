@@ -26,7 +26,10 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics.pairwise import cosine_similarity
 from math import radians, sin, cos, sqrt, atan2
-
+from .recommendations import recommend_hotels_item_based
+from .activity_recommendations import recommend_activities_content_based, recommend_activities_item_based
+import math
+from django.http import HttpResponseServerError
 
 # Home Page
 def home(request):
@@ -303,7 +306,7 @@ def add_hotel_review(request, id):
             description=description,
         )
         # Redirect to the hotel detail page, or wherever is appropriate
-        return redirect('hotel_details', id=hotel)
+        return redirect('hotel_details', id=hotel.id)
 
     # If GET, show the empty form -- though this can be skipped if form is POST only
     return render(request, 'userss/add_hotel_review.html', {'hotel': hotel})
@@ -553,18 +556,34 @@ def delete_activity_review(request, id):
     messages.success(request, "Activity Reviews deleted successfully.")
     return redirect('activity_review')
 
-def activity_details(request, id):
-    activity = get_object_or_404(Activity, pk=id)
-    return render(request, 'userss/activity_details_page.html', {'activity':activity})
 
 def activity_details(request, id):
     activity = get_object_or_404(Activity, pk=id)
+    reviews = ActivityReview.objects.filter(activity=activity)
+
+    # Retrieve all activities from the database
+    all_activities = Activity.objects.all()
+
+    # Call recommend_activities_item_based function to get recommendations
+    recommended_activities_df = recommend_activities_item_based(activity.name, all_activities, top_n=5)
+
+    recommendations = []
+    if not recommended_activities_df.empty:
+        recommendations = recommended_activities_df.to_dict(orient='records')
+
     context = {
         'activity': activity,
+        'recommendations': recommendations,
+        'reviews': reviews, 
         'latitude': activity.latitude,
         'longitude': activity.longitude
     }
     return render(request, 'userss/activity_details_page.html', context)
+
+
+
+
+
 
 # Navbar
 def navBar(request):
@@ -578,15 +597,28 @@ def about_us(request):
     return render(request, "userss/about_us.html")
 
 
-# Hotel Details Page
 def hotel_details(request, id):
     hotel = get_object_or_404(Hotel, pk=id)
+    reviews = HotelReview.objects.filter(hotel=hotel)
+
+    # Recommend hotels based on the selected hotel's name
+    recommended_hotels_df = recommend_hotels_item_based(hotel.name, top_n=5)
+
+    recommendations = []
+    if not recommended_hotels_df.empty:
+        # Calculate rounded distance
+        recommended_hotels_df['rounded_distance'] = recommended_hotels_df['distance'].apply(lambda x: round(x))
+        recommendations = recommended_hotels_df.to_dict(orient='records')
+
     context = {
         'hotel': hotel,
+        'recommendations': recommendations,
+        'reviews': reviews, 
         'latitude': hotel.latitude,
         'longitude': hotel.longitude
     }
     return render(request, 'userss/hotel_details_page.html', context)
+
 
 
 def search_hotels(request):
@@ -657,7 +689,11 @@ def activity_search_results(request):
     latitude = float(request.GET.get('latitude'))
     longitude = float(request.GET.get('longitude'))
 
-    activities = Activity.objects.filter(type=activity_type)
+    if activity_type:
+        activities = Activity.objects.filter(type=activity_type)
+    else:
+        activities = Activity.objects.all()
+
     nearby_activities = []
 
     for activity in activities:
@@ -669,6 +705,7 @@ def activity_search_results(request):
             nearby_activities.append((activity, distance))
 
     return render(request, 'userss/activity_search_results.html', {'activities': nearby_activities})
+
 
 def haversine_distance(lat1, lon1, lat2, lon2):
     R = 6371  # Radius of the Earth in km

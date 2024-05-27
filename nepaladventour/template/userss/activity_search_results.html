@@ -14,15 +14,14 @@
         <!-- Top Matching Results -->
         {% if activities %}
             {% for activity, distance in activities %}
-                <div class="card mt-4" style="height: 350px; width: 78%;background-color: #E9EDDE;border-radius: 1px; background: #e0e0e0;
-                box-shadow: 5px 5px 2px #5a5a5a,-5px -5px 2px #ffffff;">
+                <div class="card mt-4" style="height: 350px; width: 78%;background-color: #E9EDDE;border-radius: 1px; background: #e0e0e0; box-shadow: 5px 5px 2px #5a5a5a,-5px -5px 2px #ffffff;">
                     <div class="row">
                         <div class="col-md-4">
                             <!-- Ensure there is a default image or check if the picture exists -->
                             {% if activity.picture %}
                                 <img src="{{ activity.picture.url }}" class="img-fluid" alt="{{ activity.name }}" style="height: 350px; width: 500px;">
                             {% else %}
-                                <img src="path/to/default/image.jpg" class="img-fluid" alt="Default Image" style="height: 300px; width: 200px;">
+                                <img src="{% static 'path/to/default/image.jpg' %}" class="img-fluid" alt="Default Image" style="height: 300px; width: 200px;">
                             {% endif %}
                         </div>
                         

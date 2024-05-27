@@ -77,6 +77,9 @@
 
                             <dt class="col-3">Age Required:</dt>
                             <dd class="col-9">{{ activity.age_required }}</dd>
+
+                            <dt class="col-3">Distance</dt>
+                            <dd class="col-9"></dd>
                         </div>
                         <hr />
                         <a href="{% url 'add_activity_review' activity.id %}" class="btn btn-warning shadow-0"><i class="fa-solid fa-plus"></i> Add Review</a>
@@ -100,75 +103,73 @@
                 </div>
 
                 <!-- Suggested activities -->
+                <!-- Display recommended activities -->
                 <div class="col-lg-4">
                     <div class="px-0 border rounded-2 shadow-0">
                         <div class="card">
                             <div class="card-body" style="background-color: antiquewhite;">
                                 <h5 class="card-title">You may also like</h5>
 
-                                <!-- Suggested activity 1 -->
-                                <div class="d-flex mb-3">
-                                    <a href="#" class="me-3">
-                                        <img src="{% static 'images/details/1.jpg' %}" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                                    </a>
-                                    <div class="info">
-                                        <a href="#" class="nav-link mb-1">
-                                            Sanctuary Chitwan National Park<br />
-                                            <strong style="color: rgb(66, 213, 66);">4.5</strong>
-                                        </a>
-                                        <strong class="text-dark"> Rs 1000</strong>
-                                    </div>
-                                </div>
-
-                                <!-- Suggested activity 2 -->
-                                <div class="d-flex mb-3">
-                                    <a href="#" class="me-3">
-                                        <img src="{% static 'images/details/2.jpg' %}" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                                    </a>
-                                    <div class="info">
-                                        <a href="#" class="nav-link mb-1">
-                                            Best Venue Swimming Pool<br />
-                                            <strong style="color: rgb(66, 213, 66);">4.5</strong>
-                                        </a>
-                                        <strong class="text-dark"> Rs 450</strong>
-                                    </div>
-                                </div>
-
-                                <!-- Suggested activity 3 -->
-                                <div class="d-flex mb-3">
-                                    <a href="#" class="me-3">
-                                        <img src="{% static 'images/details/3.jpg' %}" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                                    </a>
-                                    <div class="info">
-                                        <a href="#" class="nav-link mb-1">
-                                            Hotel Aagaman<br />
-                                            <strong style="color: rgb(66, 213, 66);">5</strong>
-                                        </a>
-                                        <strong class="text-dark"> Rs 350</strong>
-                                    </div>
-                                </div>
-
-                                <!-- Suggested activity 4 -->
-                                <div class="d-flex">
-                                    <a href="#" class="me-3">
-                                        <img src="{% static 'images/details/4.jpg' %}" style="min-width: 96px; height: 96px;" class="img-md img-thumbnail" />
-                                    </a>
-                                    <div class="info">
-                                        <a href="#" class="nav-link mb-1">
-                                            Potala Guest House <br/>
-                                            <strong style="color: rgb(66, 213, 66);">4</strong>
-                                        </a>
-                                        <strong class="text-dark"> Rs 300</strong>
-                                    </div>
-                                </div>
-
+                                {% if recommended_activities %}
+                                    {% for activity in recommended_activities %}
+                                        <div class="d-flex mb-3">
+                                            <div class="info">
+                                                <a href="#" class="nav-link mb-1">
+                                                    <strong>{{ activity.name }}</strong><br />
+                                                    <strong style="color: rgb(66, 213, 66);">{{ activity.rating }}</strong>
+                                                </a>
+                                                <p class="text-dark">{{ activity.phone_number }}</p>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>No recommendations found.</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- End of recommended activities -->
+
+                
+
+
+
+
+
             </div>
         </div>
     </section>
+
+    <section class="border-top py-4" style="background-color: #292a2d; color: white;">
+        <div class="container">
+          <div class="row justify-content-center"> <!-- Center the card within the row -->
+            <div class="col-lg-6"> <!-- Adjust column width as needed -->
+              <div class="px-0 border rounded-2 shadow-0" style="width: 600px;"> <!-- Increase width of the card -->
+                  <div class="card">
+                      <div class="card-body" style="background-color: antiquewhite; max-height: 300px; overflow-y: auto;"> <!-- Make the card-body scrollable -->
+                          <h5 class="card-title"><strong>Reviews</strong></h5>
+                          {% if reviews %}
+                              <ul class="list-group list-group-flush"> <!-- Use a list group for better structure -->
+                                  {% for review in reviews %}
+                                      <li class="list-group-item">
+                                        <p style="font-weight: 580;">{{ review.user.fullname }}</p>
+                                          <p>{{ review.description }}</p>
+                                          Rating: <strong style="color: rgb(66, 213, 66);">{{ review.rating }}</strong>
+                                      </li>
+                                  {% endfor %}
+                              </ul>
+                          {% else %}
+                              <p>No reviews available.</p>
+                          {% endif %}
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
 
     <!-- Google Map API Integration -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqN8-CkaJfj0r53POu6Q3cyFlWepbza3Y&callback=initMap" async defer></script>
